@@ -167,8 +167,38 @@ var a = 100;
     - JS没有块级作用域
     - 只有函数和全局作用域 
 - 作用域链
-    - 
 - 闭包
+- 闭包的使用场景
+    - 函数作为返回值
+    ```
+    function f1(){
+        var a = 100;
+        return function(){
+            console.log(a);
+            }
+    }
+
+    var f = f1();
+    var a = 200;
+    f(); //100
+    ```
+    - 函数作为参数传递
+    ```
+    function f(){
+        var a = 100;
+        return function(){
+            console.log(a);
+        }
+    }    
+    var f1 = f();
+    
+    function f2(fn){
+        var a = 200;
+        fn();
+    }
+
+    f2(f1); //100
+    ```
 ### 2.问题
 - 说一下变量提升的理解
 - 说明this几种不同的使用场景
