@@ -9,6 +9,7 @@
 - String
 - Object
 - Function
+
 2.何时使用===何时使用==
 ```
 if (obj.a == null){
