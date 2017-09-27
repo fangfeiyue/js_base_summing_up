@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var arr = [];
+        console.log(arr instanceof Array); //true
+
+        function F(name){
+            this.name = name;
+        }
+        F.prototype.printName = function(){
+            console.log('printName===>', this.name);
+        }
+        var f = new F('f');
+
+        for (item in f){
+            //只输出f自身的属性，不输出原型对象上的
+            if (f.hasOwnProperty(item)){
+                console.log('f===>', item);
+            }
+        }
+
+    </script>
+</body>
+</html>
