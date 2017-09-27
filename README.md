@@ -55,18 +55,7 @@ JSON是一种数据格式也是JS种的一个对象
 - if语句
 - 逻辑运算
 ## 原型原型链
-### 1.问题
-- 如何准确判断一个变量是数组类型
-```
-var arr = [];
-arr instanceof Array
-```
-- 写一个原型链继承的例子
-
-- 描述new一个对象的过程
-- zepto（或其他框架）源码中如何使用原型链
-
-### 2.知识点
+### 1.知识点
 - 构造函数
 
 用new来生成实例的函数都是构造函数
@@ -97,4 +86,29 @@ for (item in f){
 - 原型链
 
 ![原型链](http://note.youdao.com/yws/public/resource/c2361265179a03449f6d52397fd50033/xmlnote/987AAE1E2D9B420394DE2778C97E1A79/17816)
-- instanceof   
+- instanceof
+### 2.问题
+- 如何准确判断一个变量是数组类型
+```
+var arr = [];
+arr instanceof Array
+```
+- 写一个原型链继承的例子
+```
+function Parent(){
+    this.name = "ff";
+}
+
+function Children(){
+    Parent.call(this);
+}
+Children.prototype = Object.create(Parent.prototype);
+Children.prototype.constructor = Children;
+
+var children = new Children();
+```
+- 描述new一个对象的过程
+    - 创建一个新对象
+    - this指向这个新对象
+    - 执行构造函数，对this赋值
+    - 返回this
