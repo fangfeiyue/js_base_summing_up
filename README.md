@@ -203,6 +203,40 @@ var a = 100;
 ### 2.问题
 - 说一下变量提升的理解
 - 说明this几种不同的使用场景
+    - 作为构造函数执行
+    - 作为对象属性执行
+    - 作为普通函数执行
+    - call、apply、bind
 - 创建10个a标签，点击的时候弹出来对应的序号
+```
+for (var i = 0; i < 10; i++) {
+    (function (i) {
+        a = document.createElement('a');
+        a.innerHTML = i + '<br/>';
+        a.addEventListener('click', function (e) {
+            e.preventDefault();
+            alert(i);
+        });
+        document.body.appendChild(a);
+    })(i);
+}
+```
 - 如何理解作用域
+    - 自由变量
+    - 作用域链，即自由变量的查找
+    - 闭包的两个场景
 - 实际开发中闭包的应用
+    - 闭包实际应用中主要用于封装变量，收敛权限
+    ```
+    function isFirstLoad(){
+        var _list = [];
+        return function(id){
+            if (_list.indexOf(id) >=0 ){
+                return false;
+            }else{
+                _list.push(id);
+                return true;
+            }
+        }
+    }
+    ```

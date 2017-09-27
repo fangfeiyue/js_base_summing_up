@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        {
+            for (var i = 0; i < 10; i++) {
+                a = document.createElement('a');
+                a.innerHTML = i + '<br/>';
+                a.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    alert(i);
+                });
+                document.body.appendChild(a);
+            }
+        }
+
+        {
+            for (var i = 0; i < 10; i++) {
+                (function (i) {
+                    a = document.createElement('a');
+                    a.innerHTML = i + '<br/>';
+                    a.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        alert(i);
+                    });
+                    document.body.appendChild(a);
+                })(i);
+            }
+        }
+    </script>
+</body>
+
+</html>
