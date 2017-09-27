@@ -270,3 +270,69 @@ for (var i = 0; i < 10; i++) {
     - 定时任务
     - 网络请求：ajax请求，动态img加载
     - 事件绑定
+## 日期和Math
+###1.知识点
+- 日期
+```
+Date.now();//获取当前时间毫秒数
+var dt = new Date();
+dt.getTime();//获取毫秒数
+dt.getFullYear();//年
+dt.getMonth();//月（0-11）
+dt.getDate();//日（0-31）
+dt.getHours();//小时（0-23）
+dt.getMinutes();//分钟（0-59）
+dt.getSeconds();//秒（0-59）
+```
+- Math
+```
+Math.random();//获取随机数[0,1)
+```
+- 数组API
+- forEach 遍历所有元素
+```
+var arr = [1, 2, 3];
+arr.forEach(function(item, index){
+    console.log(item,'--->',index);
+});
+```
+- every   判断所有元素是否都符合条件
+```
+var arr = [1, 2, 3, 4, 5];
+var result = arr.every(function(item, index){
+    if (item < 4){
+        return true;
+    }
+});
+console.log(result); // false
+```
+- some    判断是否有至少一个元素符合条件
+```
+var arr = [1, 2, 3, 4, 5];
+var result = arr.some(function(item, index){
+    if (item < 4){
+        return true;
+    }
+});
+console.log(result); // true
+```
+- sor     排序
+```
+var arr = [4, 2, 33, 56, 12];
+var arr2 = arr.sort(function(a, b){
+    //从小到大a-b
+    //从大到小b-a
+    return a - b;
+});
+console.log(arr2); //[2, 4, 12, 33, 56]
+```
+- map     对元素重新组装，生成新数组
+```
+
+```
+- filter  过滤符合条件的元素
+- 对象API
+###2.题目
+- 获取2017-06-10格式的日期你
+- 获取随机数，要求是长度一致的字符串格式
+- 写一个能遍历对象和数组的通用的forEach函数

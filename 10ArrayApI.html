@@ -1,0 +1,55 @@
+<!-- fangfeiyue -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        {
+            var arr = [1, 2, 3];
+            arr.forEach(function(item, index){
+                console.log(item,'--->',index);
+            });
+        }
+        {
+            var arr = [1, 2, 3, 4, 5];
+            var result = arr.every(function(item, index){
+                if (item < 4){
+                    return true;
+                }
+            });
+            console.log(result); // false
+        }
+        {
+            var arr = [1, 2, 3, 4, 5];
+            var result = arr.some(function(item, index){
+                if (item < 4){
+                    return true;
+                }
+            });
+            console.log(result); // true
+        }
+        {
+            var arr = [3, 1, 3, 4, 45, 546];
+            var result = arr.some(function(item, index){
+                if (item < 4){
+                    return true;
+                }
+            });
+            console.log(result); // true
+        }
+
+        {
+            var arr = [4, 2, 33, 56, 12];
+            var arr2 = arr.sort(function(a, b){
+                return a - b;
+            });
+            console.log(arr2); //[2, 4, 12, 33, 56]
+        }
+    </script>
+</body>
+</html>
