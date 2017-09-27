@@ -251,5 +251,22 @@ for (var i = 0; i < 10; i++) {
 - 异步和单线程
 ### 题目 
 - 同步异步的区别是什么？分别举一个同步异步的例子
+    - 同步会阻塞代码执行，而异步不会
+    - alert()是同步，setTimeOut是异步
 - 一个关于setTimeout的笔试题
+    ```
+    console.log(1);
+    setTimeout(function() {
+        console.log(2);
+    }, 0);
+    console.log(3);
+    setTimeout(function() {
+        console.log(4);
+    }, 1000);
+    console.log(5);
+    //1   3   5   2   4
+    ```
 - 前端使用异步的场景有哪些
+    - 定时任务
+    - 网络请求：ajax请求，动态img加载
+    - 事件绑定
