@@ -47,6 +47,7 @@ console.log(a.name);//456
 console.log(b.name);//456
 ```
 5.如何理解JSON
+
 JSON是一种数据格式也是JS种的一个对象
 
 6.强制类型转换
@@ -93,4 +94,5 @@ for (item in f){
 ```
 - 原型链
 
+![原型链](http://note.youdao.com/yws/public/resource/c2361265179a03449f6d52397fd50033/xmlnote/987AAE1E2D9B420394DE2778C97E1A79/17816)
 - instanceof   
