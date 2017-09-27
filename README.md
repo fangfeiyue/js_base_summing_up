@@ -112,3 +112,18 @@ var children = new Children();
     - this指向这个新对象
     - 执行构造函数，对this赋值
     - 返回this
+
+### 变量提升
+```
+fn1();
+// 函数声明
+function fn1(){}
+
+fn2();//报错,报错的原因是把var fn2提前了，var fn2 = undefined;
+// 函数表达式
+var fn2 = function(){}
+
+
+console.log(a);//undefined 提前：var a = undefined;
+var a = 100;
+```
