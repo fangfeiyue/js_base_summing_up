@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        {
+            var a = {
+                name: 'A',
+                fn: function () {
+                    console.log(this.name);
+                }
+            };
+            a.fn(); //A
+            a.fn.call({
+                name: 'B'
+            }); //B
+            var fn1 = a.fn;
+            fn1(); //""
+        }
+
+
+        {
+            function Parent() {
+                this.name = 'ff';
+                console.log(this);
+            }
+
+            var p = new Parent;
+        }
+
+        {
+            function fn1(name, age){
+                console.log(name);
+                console.log(this.x);
+            }
+            // fn1.call({}, 'ffy');
+            // fn1.apply({}, ['ffy']);
+
+            function Dog(){this.name = 'dog';}
+            function Cat(){this.name = 'cat';}
+            Cat.prototype.eat = function(){console.log('eat');};
+
+            var cat = new Cat;
+            var dog = new Dog;
+            cat.eat();//eat
+            cat.eat.call(dog);//eat
+        }
+    </script>
+</body>
+
+</html>

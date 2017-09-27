@@ -132,6 +132,37 @@ var a = 100;
 ### 1.知识点
 - 执行上下文
 - this
+    - this要在执行时才能确认值，定义时无法确认
+    ```
+    var a = {
+        name: 'A',
+        fn: function(){
+            console.log(this.name);
+        }
+    };
+    a.fn();//A
+    a.fn.call({name:'B'});//B
+    var fn1 = a.fn;
+    fn1();//""
+
+    //call apply
+    function fn1(name, age){
+        console.log(name);
+        console.log(this);
+    }
+    // fn1.call({}, 'ffy');
+    // fn1.apply({}, ['ffy']);
+
+    //call apply实际应用，cat有eat方法，dog不想重复声明eat方法，可以用call来改变this的指向
+    function Dog(){this.name = 'dog';}
+    function Cat(){this.name = 'cat';}
+    Cat.prototype.eat = function(){console.log('eat');};
+
+    var cat = new Cat;
+    var dog = new Dog;
+    cat.eat();//eat
+    cat.eat.call(dog);//eat
+    ```
 - 作用域
 - 作用域链
 - 闭包
