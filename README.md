@@ -381,5 +381,10 @@ function formatDate(date){
 console.log(formatDate(new Date()));
 ```
 - 获取随机数，要求是长度一致的字符串格式
-
+```
+var random = Math.random();
+random += '0000000000';
+random = random.slice(0, 10);
+console.log(random);
+```
 - 写一个能遍历对象和数组的通用的forEach函数
