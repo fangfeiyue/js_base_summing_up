@@ -8,7 +8,7 @@
 </head>
 <body>
     <script>
-        var xhr = new XMLHttpRequest();
+        var xhr = new XMLHttpRequest() || new ActiveXObject();
         xhr.open('GET', "/api", false);
         xhr.onreadystatechange = function(){
             if (xhr.readyState == 4){
