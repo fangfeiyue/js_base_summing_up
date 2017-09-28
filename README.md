@@ -408,7 +408,7 @@ if (param instanceof Array){
 }
 ```
 ## 事件
-###知识点
+### 知识点
 - 通用事件绑定
 ```
 var btn = document.getElementById('btn');
@@ -445,7 +445,7 @@ function bindEvent(ele, type, selector, fn){
     });
 }
 ``` 
-###题目 
+### 题目 
 - 编写一个通用的事件监听函数
 - 描述事件冒泡流程
 - 对于一个无限下拉加载图片页面，如何给每个图片绑定事件
