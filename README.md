@@ -523,8 +523,10 @@ DOM可以理解为浏览器把拿到的html代码，结构化一个浏览器能�
 - DOM节点操作
     - 获取DOM节点
     - prototype
+
     js对象的一个属性
     - Attribute
+    
     html标签的属性
 - DOM结构操作
 ### 题目
