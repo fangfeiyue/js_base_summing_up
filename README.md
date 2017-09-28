@@ -388,3 +388,22 @@ random = random.slice(0, 10);
 console.log(random);
 ```
 - 写一个能遍历对象和数组的通用的forEach函数
+```
+var arr = [3, 4, 5, 6];
+var obj = {name:'ffy', age:18};
+
+forEach(arr);
+forEach(obj);
+
+function forEach(param){
+if (param instanceof Array){
+    param.forEach(function(item, index){
+        console.log(index, '------>', item);
+    });
+}else{
+    for(var item in param){
+        console.log(item, '------>', param[item]);
+    }
+}   
+}
+```
