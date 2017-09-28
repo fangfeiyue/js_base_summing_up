@@ -488,7 +488,11 @@ xhr.send(null);
         - script
         - link
 - JSONP
+
 - 服务器端设置http header
+另一个解决跨域的简单方法，需要服务器端来做
+
+![服务器端设置http header](http://note.youdao.com/yws/public/resource/c2361265179a03449f6d52397fd50033/xmlnote/50549C9315D649559E1368BCF680A347/17818)
 ### 题目 
 - 手动编写一个ajax，不依赖第三方库
 - 跨域的几种实现方式 
