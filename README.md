@@ -516,3 +516,11 @@ xhr.send(null);
     - 容量
     - 是否会携带到ajax中
     - API易用性
+##Dom-document object model
+### 知识点
+- 
+### 题目
+- Dom是哪种的基本数据类型
+- DOM操作的常用API有哪些
+- DOM节点的attr和property有何区别
+
