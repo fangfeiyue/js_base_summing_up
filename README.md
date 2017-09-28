@@ -495,4 +495,15 @@ xhr.send(null);
 ![服务器端设置http header](http://note.youdao.com/yws/public/resource/c2361265179a03449f6d52397fd50033/xmlnote/50549C9315D649559E1368BCF680A347/17818)
 ### 题目 
 - 手动编写一个ajax，不依赖第三方库
-- 跨域的几种实现方式 
+- 跨域的几种实现方式
+## 存储
+### 知识点
+- cookie
+    - 本身用于客户端和服务端通信，但是它有本地存储的功能，于是就被借用
+    - 缺点： 
+        - 存储量太小，只有4kb
+        - 所有的http请求都带着，会影响获取资源的效率
+        - API简单，需要封装才能用
+- sessionStorage和localStorage
+### 题目
+- 请描述下cookie，sessionStorage和localStorage的区别
