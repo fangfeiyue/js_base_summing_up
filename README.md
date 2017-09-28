@@ -518,7 +518,13 @@ xhr.send(null);
     - API易用性
 ##Dom-document object model
 ### 知识点
-- 
+- DOM本质
+DOM可以理解为浏览器把拿到的html代码，结构化一个浏览器能识别并且js可操作的一个模型而已
+- DOM节点操作
+    - 获取DOM节点
+    - prototype
+    - attribute
+- DOM结构操作
 ### 题目
 - Dom是哪种的基本数据类型
 - DOM操作的常用API有哪些
