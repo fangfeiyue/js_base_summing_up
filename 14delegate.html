@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
     <div id="box">
         <button>a1</button>
@@ -15,28 +17,43 @@
         <button>a5</button>
     </div>
     <script>
+        /* 
+                    完成一个通用的事件绑定
+                    1.普通事件
+                    bindEvent(ele, type, fn);
+                    2.事件代理
+                    bindEvent(ele, type, selector, fn);
+                        1.selector没有值
+                            1.1fn赋值给selector
+                            1.2走普通事件函数
+                        2.selector有值
+                            2.1走事件代理
+                 */
         var box = document.getElementById('box');
 
-        bindEvent(box, 'click', 'button', function(e){
+        bindEvent(box, 'click', 'button', function (e) {
             console.log(this.innerHTML);
         });
 
-        function bindEvent(ele, type, selector, fn){
-            if (!fn){
+
+        function bindEvent(ele, type, selector, fn) {
+            if (!fn) {
                 fn = selector;
                 selector = null;
             }
-            ele.addEventListener(type, function(e){
-                if (selector){
+
+            ele.addEventListener(type, function (e) {
+                if (selector) {
                     var target = e.target;
-                    if (target.matches(selector)){
+                    if (target.matches(selector)) {
                         fn.call(target, e);
                     }
-                }else{
+                } else {
                     fn(e);
                 }
             });
         }
     </script>
 </body>
+
 </html>
