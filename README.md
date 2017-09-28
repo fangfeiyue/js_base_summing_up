@@ -344,9 +344,42 @@ console.log(arr2); //[4, 33, 56, 12]
 ```
 - 对象API
 ```
-
+var obj = {
+    name: 'ffy',
+    age: 18
+};
+for (var key in obj){
+    console.log(key);//name age
+}
 ```
 ### 2.题目
-- 获取2017-06-10格式的日期你
+- 获取2017-xx-xx格式的日期
+```
+// 补零操作
+function fillZero(param){
+    if (param < 10){
+        return '0' + param;
+    }
+    return param;
+} 
+
+// 日期格式
+function formatDate(date){
+    if (!date){
+        date = new Date();
+    }
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    
+    month = fillZero(month);
+    day = fillZero(day);
+
+    return year + '-' + month + '-' + day;
+}
+
+console.log(formatDate(new Date()));
+```
 - 获取随机数，要求是长度一致的字符串格式
+
 - 写一个能遍历对象和数组的通用的forEach函数

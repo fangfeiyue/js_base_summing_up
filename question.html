@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 获取2017-06-10格式的日期
+        /* 
+            1.分别获取年月日
+            2.月日不够两位的前面补零
+         */
+        // 补零操作
+        function fillZero(param){
+            if (param < 10){
+                return '0' + param;
+            }
+            return param;
+        } 
+
+        // 日期格式
+        function formatDate(date){
+            if (!date){
+                date = new Date();
+            }
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            
+            month = fillZero(month);
+            day = fillZero(day);
+
+            return year + '-' + month + '-' + day;
+        }
+
+        console.log(formatDate(new Date()));
+
+        /* 
+            获取随机数，要求是长度一致的字符串格式
+            1.获取一个随机数
+            2.长度一致
+            3.必须是字符串格式
+        */
+        
+
+    </script>
+</body>
+</html>
