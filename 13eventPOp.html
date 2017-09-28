@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <button>激活</button>
+        <button>取消</button>
+    </div>
+    <script>
+        var box = document.getElementById('box');
+
+        bindEvent(box, 'click', function(e){
+            if (e.target.innerHTML == '激活'){
+                alert('激活');
+            }else{
+                alert('取消');
+            }
+        });
+
+        function bindEvent(ele, type, fn){
+            ele.addEventListener(type, fn, false);
+        }
+    </script>
+</body>
+</html>

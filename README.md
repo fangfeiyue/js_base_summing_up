@@ -407,3 +407,45 @@ if (param instanceof Array){
 }   
 }
 ```
+## 事件
+###知识点
+- 通用事件绑定
+```
+var btn = document.getElementById('btn');
+function bindEvent(ele, type, fn){
+    ele.addEventListener(type, fn);
+}
+bindEvent(btn, 'click', function(){
+    alert('成功点击了我！！！');
+});
+```
+- 事件冒泡
+- 代理
+```
+var box = document.getElementById('box');
+
+bindEvent(box, 'click', 'button', function(e){
+    console.log(this.innerHTML);
+});
+
+function bindEvent(ele, type, selector, fn){
+    if (!fn){
+        fn = selector;
+        selector = null;
+    }
+    ele.addEventListener(type, function(e){
+        if (selector){
+            var target = e.target;
+            if (target.matches(selector)){
+                fn.call(target, e);
+            }
+        }else{
+            fn(e);
+        }
+    });
+}
+``` 
+###题目 
+- 编写一个通用的事件监听函数
+- 描述事件冒泡流程
+- 对于一个无限下拉加载图片页面，如何给每个图片绑定事件

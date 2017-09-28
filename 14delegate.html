@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="box">
+        <button>a1</button>
+        <button>a2</button>
+        <button>a3</button>
+        <button>a4</button>
+        <button>a5</button>
+    </div>
+    <script>
+        var box = document.getElementById('box');
+
+        bindEvent(box, 'click', 'button', function(e){
+            console.log(this.innerHTML);
+        });
+
+        function bindEvent(ele, type, selector, fn){
+            if (!fn){
+                fn = selector;
+                selector = null;
+            }
+            ele.addEventListener(type, function(e){
+                if (selector){
+                    var target = e.target;
+                    if (target.matches(selector)){
+                        fn.call(target, e);
+                    }
+                }else{
+                    fn(e);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
