@@ -509,5 +509,10 @@ xhr.send(null);
     - API简单易用
         - localStorage.setItem(key, value);
         - localStorage.getItem(key);
+    - iOS safari隐藏模式下localStorage.getItem会报错，建议统一使用try-catch封装 
+
 ### 题目
 - 请描述下cookie，sessionStorage和localStorage的区别
+    - 容量
+    - 是否会携带到ajax中
+    - API易用性
