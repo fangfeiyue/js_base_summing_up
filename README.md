@@ -505,5 +505,9 @@ xhr.send(null);
         - 所有的http请求都带着，会影响获取资源的效率
         - API简单，需要封装才能用
 - sessionStorage和localStorage
+    - H5专门为存储设计，最大容量5M
+    - API简单易用
+        - localStorage.setItem(key, value);
+        - localStorage.getItem(key);
 ### 题目
 - 请描述下cookie，sessionStorage和localStorage的区别
