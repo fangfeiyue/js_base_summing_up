@@ -334,7 +334,13 @@ console.log(arr2); //["_4_", "_2_", "_33_", "_56_", "_12_"]
 ```
 - filter  过滤符合条件的元素
 ```
-
+var arr = [4, 2, 33, 56, 12];
+var arr2 = arr.filter((item, index)=>{
+    if (item > 2){
+        return true;
+    }
+});
+console.log(arr2); //[4, 33, 56, 12]
 ```
 - 对象API
 ###2.题目
