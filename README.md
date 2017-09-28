@@ -449,3 +449,26 @@ function bindEvent(ele, type, selector, fn){
 - 编写一个通用的事件监听函数
 - 描述事件冒泡流程
 - 对于一个无限下拉加载图片页面，如何给每个图片绑定事件
+- 代理的优点
+    - 代码比较简洁
+    - 给浏览器的压力比较小，效率高
+## Ajax
+### 知识点
+- XMLHttpRequest
+```
+var xhr = new XMLHttpRequest();
+xhr.open('GET', "/api", false);
+xhr.onreadystatechange = function(){
+    if (xhr.readyState == 4){
+        if (xhr.status == 200){
+            console.log(xhr.responseText);
+        }
+    }
+};
+xhr.send(null);
+```
+- 状态码说明
+- 跨域
+### 题目
+- 手动编写一个ajax，不依赖第三方库
+- 跨域的几种实现方式 
