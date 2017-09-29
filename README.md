@@ -555,8 +555,9 @@ DOM可以理解为浏览器把拿到的html代码，结构化一个浏览器能�
 
 ### 题目
 - Dom是哪种的基本数据类型
-```
-
-```
+树
 - DOM操作的常用API有哪些
 - DOM节点的attr和property有何区别
+    - property只是一个JS对象的属性的修改
+    - attribute是对html标签属性的修改
+ 
