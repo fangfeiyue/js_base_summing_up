@@ -560,4 +560,33 @@ DOM可以理解为浏览器把拿到的html代码，结构化一个浏览器能�
 - DOM节点的attr和property有何区别
     - property只是一个JS对象的属性的修改
     - attribute是对html标签属性的修改
- 
+## BOM操作 Browser Object Model
+### 知识点
+- navigator
+```
+var ua = navigator.userAgent;
+var isChrome = ua.indexOf('Chrome');
+console.log(isChrome);
+```
+- screen
+```
+console.log(screen.width);
+console.log(screen.height);
+```
+- location
+```
+//file:///Users/fangfeiyue/Desktop/GuoAn/jsBase/17BOM.html
+console.log(location.href);
+console.log(location.protocol);//file:
+console.log(location.pathname);///Users/fangfeiyue/Desktop/GuoAn/jsBase/17BOM.html
+console.log(location.search); // ? 
+console.log(location.hash); //#
+```
+- history
+```
+history.back();
+history.forward();
+```
+### 题目 
+- 如何检测浏览器的类型
+- 拆解url各部分  

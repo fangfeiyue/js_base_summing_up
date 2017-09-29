@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        {
+            // navigator
+            var ua = navigator.userAgent;
+            var isChrome = ua.indexOf('Chrome');
+            console.log(isChrome);
+        }
+        {
+            // screen
+            console.log(screen.width);
+            console.log(screen.height);
+        }
+        {
+            // location
+            console.log(location.href);//file:///Users/fangfeiyue/Desktop/GuoAn/jsBase/17BOM.html
+            console.log(location.protocol);//file:
+            console.log(location.pathname);///Users/fangfeiyue/Desktop/GuoAn/jsBase/17BOM.html
+            console.log(location.search); // ? 
+            console.log(location.hash); //#
+        }
+        {
+            // history
+            history.back();
+            history.forward();
+        }
+    </script>
+</body>
+</html>
