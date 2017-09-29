@@ -1,0 +1,81 @@
+﻿ <!DOCTYPE html>  
+<html>  
+    <head>  
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+        <title>上传图片</title>
+        <style>
+            .add_btn{
+            	position: relative;
+            }
+        	.add_btn input[type='file']{
+        		opacity: 0;
+        		position: absolute;
+        		left: 0;
+        		top: 0;
+        		width: 50px;
+        		height: 50px;
+        	}
+        	.add_btn p{
+        		font-size:12px;
+        	}
+        </style>
+    	<script type="text/javascript" class="library" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>  
+    </head>  
+    <body>  
+    	<!--添加图片-->
+      	<div class="add_btn">
+		<!--input type=‘file’有一个属性 files，是一个数组，上传的图片都存在这个数组中，可以通过去数组元素的方式取出图片，再显示到页面上-->
+      		<input type="file" name="" id="add_input" value="" onchange="javascript:setImagePreview('add_input')";/>
+      		
+      		<p><img src="add_img.png"/><span>添加图片</span></p>
+      	</div>
+      	
+      	<!--预览图片-->
+	  	<div id="add_input_localImag">
+	          <img id="add_input_preview"  style="display: block; width: auto;height: 100px;">
+	    </div>
+    </body> 
+   <script>
+		function setImagePreview(imgid) { 
+		    var docObj=document.getElementById(imgid);
+    		var imgObjPreview=document.getElementById(imgid+"_preview");
+		    if(docObj.files &&docObj.files[0])
+		    {
+		        //火狐下，直接设img属性
+		        imgObjPreview.style.display = 'block';
+		        imgObjPreview.style.width = 'auto';
+		        imgObjPreview.style.height = '110px';
+		        //imgObjPreview.src = docObj.files[0].getAsDataURL();
+		
+		        //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+		        imgObjPreview.src = window.URL.createObjectURL(docObj.files[0]);
+		    }
+		    else
+		    {
+		        //IE下，使用滤镜
+		        docObj.select();
+		        var imgSrc = document.selection.createRange().text;
+		        var localImagId = document.getElementById(imgid+"_localImag");
+		        //必须设置初始大小
+		        localImagId.style.width = "auto";
+		        localImagId.style.height = "110px";
+		        //图片异常的捕捉，防止用户修改后缀来伪造图片
+		        try{
+		            localImagId.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+		            localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+		        }
+		        catch(e)
+		        {
+		            alert("您上传的图片格式不正确，请重新选择!");
+		            return false;
+		        }
+		        imgObjPreview.style.display = 'none';
+		        document.selection.empty();
+		    }
+		    return true;
+		}
+		   	
+   	
+   	
+   </script>
+</html>   
