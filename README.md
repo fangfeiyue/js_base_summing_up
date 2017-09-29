@@ -579,8 +579,8 @@ console.log(screen.height);
 console.log(location.href);
 console.log(location.protocol);//file:
 console.log(location.pathname);///Users/fangfeiyue/Desktop/GuoAn/jsBase/17BOM.html
-console.log(location.search); // ? 
-console.log(location.hash); //#
+console.log(location.search); // 得到?后面的字符串 
+console.log(location.hash); // 得到#后面的字符串
 ```
 - history
 ```
