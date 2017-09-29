@@ -61,8 +61,13 @@
             // 获取父元素和子元素
             var div = document.getElementById('div3');
             var child = div.childNodes;
-            child = div.removeChild(child[1]);
-            console.log(child);
+            // child = div.removeChild(child[1]);
+            
+            console.log(child[0].nodeType);
+            console.log(child[0].nodeName);
+            console.log(child[1].nodeType);
+            console.log(child[1].nodeName);
+
         }
     </script>
 </body>
