@@ -529,8 +529,34 @@ DOM可以理解为浏览器把拿到的html代码，结构化一个浏览器能�
     
     html标签的属性
 - DOM结构操作
+    - 新增节点
+    ```
+    // 新增节点
+    var div1 = document.getElementById('div1');
+    var p = document.createElement('p');
+    p.innerHTML = 'hello world';
+    div1.appendChild(p);
+    // 移动已有节点
+    var div2 = document.getElementById('div2');
+    div2.appendChild(p);
+    ```
+    - 获取父元素、子元素
+    ```
+    // 获取父元素和子元素
+    var div = document.getElementById('div3');
+    var child = div.childNodes;
+    //删除节点
+    child = div.removeChild(child[1]);
+    console.log(child);
+    ``` 
 ### 题目
 - Dom是哪种的基本数据类型
+```
+
+```
 - DOM操作的常用API有哪些
 - DOM节点的attr和property有何区别
 
+http://dynamic-image.yesky.com/740x-/uploadImages/2015/157/16/3PB48B2OM696.jpg
+
+https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1506655333&di=2f9b685bb11aded97ccfad66794ef286&src=http://image.tianjimedia.com/uploadImages/2015/153/36/S52M1IRNM388_1000x500.jpg

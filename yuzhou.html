@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body {margin: 0;}
+body, html {overflow: hidden;}
+body, html, .canvasbox {width: 100%;height: 100%;}
+/* 坐标系 */
+.zuobiaoxi {position: absolute;display: table;right: 3px;top: 3px;font-size: 12px;z-index: 1;}
+.zuobiaoxi, .zuobiaoxi h6 {color: #fff;}
+.zuobiaoxi h6, .zuobiaoxi p {margin: 2px 0;}
+.zuobiaoxi h6 {font-size: 12px;font-weight: normal;}
+</style>
+</head>
+<body>
+<div class="canvasbox" id="canvasbox"></div>
+<div class="zuobiaoxi">
+	<h6>摄像机坐标</h6>
+	<p>X:<span id="zuobiao-x"></span></p>
+	<p>Y:<span id="zuobiao-y"></span></p>
+	<p>Z:<span id="zuobiao-z"></span></p>
+</div>
+<script src="https://cdn.bootcss.com/three.js/r76/three.min.js"></script>
+<script src="https://cdn.bootcss.com/stats.js/r16/Stats.min.js"></script>
+<script>/*控制摄像机的插件*/
+/**
+ * @author qiao / https://github.com/qiao
+ * @author mrdoob / http://mrdoob.com
+ * @author alteredq / http://alteredqualia.com/
+ * @author WestLangley / http://github.com/WestLangley
+ * @author erich666 / http://erichaines.com
+ */
+// This set of controls performs orbiting, dollying (zooming), and panning. Unlike TrackballControls, it maintains the "up" direction object.up (+Y by default).     Orbit - left mouse / touch: one finger move    Zoom - middle mouse, or mousewheel / touch: two finger spread or squish    Pan - right mouse, or arrow keys / touch: three finter swipe
+THREE.OrbitControls=function(object,domElement){this.object=object;this.domElement=(domElement!==undefined)?domElement:document;this.enabled=true;this.target=new THREE.Vector3();this.minDistance=0;this.maxDistance=Infinity;this.minZoom=0;this.maxZoom=Infinity;this.minPolarAngle=0;this.maxPolarAngle=Math.PI;this.minAzimuthAngle= -Infinity;this.maxAzimuthAngle=Infinity;this.enableDamping=false;this.dampingFactor=0.25;this.enableZoom=true;this.zoomSpeed=1.0;this.enableRotate=true;this.rotateSpeed=1.0;this.enablePan=true;this.keyPanSpeed=7.0;this.autoRotate=false;this.autoRotateSpeed=2.0;this.enableKeys=true;this.keys={LEFT:37,UP:38,RIGHT:39,BOTTOM:40};this.mouseButtons={ORBIT:THREE.MOUSE.LEFT,ZOOM:THREE.MOUSE.MIDDLE,PAN:THREE.MOUSE.RIGHT};this.target0=this.target.clone();this.position0=this.object.position.clone();this.zoom0=this.object.zoom;this.getPolarAngle=function(){return phi};this.getAzimuthalAngle=function(){return theta};this.reset=function(){scope.target.copy(scope.target0);scope.object.position.copy(scope.position0);scope.object.zoom=scope.zoom0;scope.object.updateProjectionMatrix();scope.dispatchEvent(changeEvent);scope.update();state=STATE.NONE};this.update=function(){var offset=new THREE.Vector3();var quat=new THREE.Quaternion().setFromUnitVectors(object.up,new THREE.Vector3(0,1,0));var quatInverse=quat.clone().inverse();var lastPosition=new THREE.Vector3();var lastQuaternion=new THREE.Quaternion();return function(){var position=scope.object.position;offset.copy(position).sub(scope.target);offset.applyQuaternion(quat);spherical.setFromVector3(offset);if(scope.autoRotate&&state===STATE.NONE){rotateLeft(getAutoRotationAngle())}spherical.theta+=sphericalDelta.theta;spherical.phi+=sphericalDelta.phi;spherical.theta=Math.max(scope.minAzimuthAngle,Math.min(scope.maxAzimuthAngle,spherical.theta));spherical.phi=Math.max(scope.minPolarAngle,Math.min(scope.maxPolarAngle,spherical.phi));spherical.makeSafe();spherical.radius*=scale;spherical.radius=Math.max(scope.minDistance,Math.min(scope.maxDistance,spherical.radius));scope.target.add(panOffset);offset.setFromSpherical(spherical);offset.applyQuaternion(quatInverse);position.copy(scope.target).add(offset);scope.object.lookAt(scope.target);if(scope.enableDamping===true){sphericalDelta.theta*=(1-scope.dampingFactor);sphericalDelta.phi*=(1-scope.dampingFactor)}else{sphericalDelta.set(0,0,0)}scale=1;panOffset.set(0,0,0);if(zoomChanged||lastPosition.distanceToSquared(scope.object.position)>EPS||8*(1-lastQuaternion.dot(scope.object.quaternion))>EPS){scope.dispatchEvent(changeEvent);lastPosition.copy(scope.object.position);lastQuaternion.copy(scope.object.quaternion);zoomChanged=false;return true}return false}}();this.dispose=function(){scope.domElement.removeEventListener('contextmenu',onContextMenu,false);scope.domElement.removeEventListener('mousedown',onMouseDown,false);scope.domElement.removeEventListener('mousewheel',onMouseWheel,false);scope.domElement.removeEventListener('MozMousePixelScroll',onMouseWheel,false);scope.domElement.removeEventListener('touchstart',onTouchStart,false);scope.domElement.removeEventListener('touchend',onTouchEnd,false);scope.domElement.removeEventListener('touchmove',onTouchMove,false);document.removeEventListener('mousemove',onMouseMove,false);document.removeEventListener('mouseup',onMouseUp,false);document.removeEventListener('mouseout',onMouseUp,false);window.removeEventListener('keydown',onKeyDown,false);};var scope=this;var changeEvent={type:'change'};var startEvent={type:'start'};var endEvent={type:'end'};var STATE={NONE: -1,ROTATE:0,DOLLY:1,PAN:2,TOUCH_ROTATE:3,TOUCH_DOLLY:4,TOUCH_PAN:5};var state=STATE.NONE;var EPS=0.000001;var spherical=new THREE.Spherical();var sphericalDelta=new THREE.Spherical();var scale=1;var panOffset=new THREE.Vector3();var zoomChanged=false;var rotateStart=new THREE.Vector2();var rotateEnd=new THREE.Vector2();var rotateDelta=new THREE.Vector2();var panStart=new THREE.Vector2();var panEnd=new THREE.Vector2();var panDelta=new THREE.Vector2();var dollyStart=new THREE.Vector2();var dollyEnd=new THREE.Vector2();var dollyDelta=new THREE.Vector2();function getAutoRotationAngle(){return 2*Math.PI/60/60*scope.autoRotateSpeed}function getZoomScale(){return Math.pow(0.95,scope.zoomSpeed)}function rotateLeft(angle){sphericalDelta.theta-=angle}function rotateUp(angle){sphericalDelta.phi-=angle}var panLeft=function(){var v=new THREE.Vector3();return function panLeft(distance,objectMatrix){v.setFromMatrixColumn(objectMatrix,0);v.multiplyScalar(-distance);panOffset.add(v)}}();var panUp=function(){var v=new THREE.Vector3();return function panUp(distance,objectMatrix){v.setFromMatrixColumn(objectMatrix,1);v.multiplyScalar(distance);panOffset.add(v)}}();var pan=function(){var offset=new THREE.Vector3();return function(deltaX,deltaY){var element=scope.domElement===document?scope.domElement.body:scope.domElement;if(scope.object instanceof THREE.PerspectiveCamera){var position=scope.object.position;offset.copy(position).sub(scope.target);var targetDistance=offset.length();targetDistance*=Math.tan((scope.object.fov/2)*Math.PI/180.0);panLeft(2*deltaX*targetDistance/element.clientHeight,scope.object.matrix);panUp(2*deltaY*targetDistance/element.clientHeight,scope.object.matrix)}else if(scope.object instanceof THREE.OrthographicCamera){panLeft(deltaX*(scope.object.right-scope.object.left)/scope.object.zoom/element.clientWidth,scope.object.matrix);panUp(deltaY*(scope.object.top-scope.object.bottom)/scope.object.zoom/element.clientHeight,scope.object.matrix)}else{console.warn('WARNING: OrbitControls.js encountered an unknown camera type - pan disabled.');scope.enablePan=false}}}();function dollyIn(dollyScale){if(scope.object instanceof THREE.PerspectiveCamera){scale/=dollyScale}else if(scope.object instanceof THREE.OrthographicCamera){scope.object.zoom=Math.max(scope.minZoom,Math.min(scope.maxZoom,scope.object.zoom*dollyScale));scope.object.updateProjectionMatrix();zoomChanged=true}else{console.warn('WARNING: OrbitControls.js encountered an unknown camera type - dolly/zoom disabled.');scope.enableZoom=false}}function dollyOut(dollyScale){if(scope.object instanceof THREE.PerspectiveCamera){scale*=dollyScale}else if(scope.object instanceof THREE.OrthographicCamera){scope.object.zoom=Math.max(scope.minZoom,Math.min(scope.maxZoom,scope.object.zoom/dollyScale));scope.object.updateProjectionMatrix();zoomChanged=true}else{console.warn('WARNING: OrbitControls.js encountered an unknown camera type - dolly/zoom disabled.');scope.enableZoom=false}}function handleMouseDownRotate(event){rotateStart.set(event.clientX,event.clientY)}function handleMouseDownDolly(event){dollyStart.set(event.clientX,event.clientY)}function handleMouseDownPan(event){panStart.set(event.clientX,event.clientY)}function handleMouseMoveRotate(event){rotateEnd.set(event.clientX,event.clientY);rotateDelta.subVectors(rotateEnd,rotateStart);var element=scope.domElement===document?scope.domElement.body:scope.domElement;rotateLeft(2*Math.PI*rotateDelta.x/element.clientWidth*scope.rotateSpeed);rotateUp(2*Math.PI*rotateDelta.y/element.clientHeight*scope.rotateSpeed);rotateStart.copy(rotateEnd);scope.update()}function handleMouseMoveDolly(event){dollyEnd.set(event.clientX,event.clientY);dollyDelta.subVectors(dollyEnd,dollyStart);if(dollyDelta.y>0){dollyIn(getZoomScale())}else if(dollyDelta.y<0){dollyOut(getZoomScale())}dollyStart.copy(dollyEnd);scope.update()}function handleMouseMovePan(event){panEnd.set(event.clientX,event.clientY);panDelta.subVectors(panEnd,panStart);pan(panDelta.x,panDelta.y);panStart.copy(panEnd);scope.update()}function handleMouseUp(event){}function handleMouseWheel(event){var delta=0;if(event.wheelDelta!==undefined){delta=event.wheelDelta}else if(event.detail!==undefined){delta= -event.detail}if(delta>0){dollyOut(getZoomScale())}else if(delta<0){dollyIn(getZoomScale())}scope.update()}function handleKeyDown(event){switch(event.keyCode){case scope.keys.UP:pan(0,scope.keyPanSpeed);scope.update();break;case scope.keys.BOTTOM:pan(0,-scope.keyPanSpeed);scope.update();break;case scope.keys.LEFT:pan(scope.keyPanSpeed,0);scope.update();break;case scope.keys.RIGHT:pan(-scope.keyPanSpeed,0);scope.update();break}}function handleTouchStartRotate(event){rotateStart.set(event.touches[0].pageX,event.touches[0].pageY)}function handleTouchStartDolly(event){var dx=event.touches[0].pageX-event.touches[1].pageX;var dy=event.touches[0].pageY-event.touches[1].pageY;var distance=Math.sqrt(dx*dx+dy*dy);dollyStart.set(0,distance)}function handleTouchStartPan(event){panStart.set(event.touches[0].pageX,event.touches[0].pageY)}function handleTouchMoveRotate(event){rotateEnd.set(event.touches[0].pageX,event.touches[0].pageY);rotateDelta.subVectors(rotateEnd,rotateStart);var element=scope.domElement===document?scope.domElement.body:scope.domElement;rotateLeft(2*Math.PI*rotateDelta.x/element.clientWidth*scope.rotateSpeed);rotateUp(2*Math.PI*rotateDelta.y/element.clientHeight*scope.rotateSpeed);rotateStart.copy(rotateEnd);scope.update()}function handleTouchMoveDolly(event){var dx=event.touches[0].pageX-event.touches[1].pageX;var dy=event.touches[0].pageY-event.touches[1].pageY;var distance=Math.sqrt(dx*dx+dy*dy);dollyEnd.set(0,distance);dollyDelta.subVectors(dollyEnd,dollyStart);if(dollyDelta.y>0){dollyOut(getZoomScale())}else if(dollyDelta.y<0){dollyIn(getZoomScale())}dollyStart.copy(dollyEnd);scope.update()}function handleTouchMovePan(event){panEnd.set(event.touches[0].pageX,event.touches[0].pageY);panDelta.subVectors(panEnd,panStart);pan(panDelta.x,panDelta.y);panStart.copy(panEnd);scope.update()}function handleTouchEnd(event){}function onMouseDown(event){if(scope.enabled===false){return}event.preventDefault();if(event.button===scope.mouseButtons.ORBIT){if(scope.enableRotate===false){return}handleMouseDownRotate(event);state=STATE.ROTATE}else if(event.button===scope.mouseButtons.ZOOM){if(scope.enableZoom===false){return}handleMouseDownDolly(event);state=STATE.DOLLY}else if(event.button===scope.mouseButtons.PAN){if(scope.enablePan===false){return}handleMouseDownPan(event);state=STATE.PAN}if(state!==STATE.NONE){document.addEventListener('mousemove',onMouseMove,false);document.addEventListener('mouseup',onMouseUp,false);document.addEventListener('mouseout',onMouseUp,false);scope.dispatchEvent(startEvent)}}function onMouseMove(event){if(scope.enabled===false){return}event.preventDefault();if(state===STATE.ROTATE){if(scope.enableRotate===false){return}handleMouseMoveRotate(event)}else if(state===STATE.DOLLY){if(scope.enableZoom===false){return}handleMouseMoveDolly(event)}else if(state===STATE.PAN){if(scope.enablePan===false){return}handleMouseMovePan(event)}}function onMouseUp(event){if(scope.enabled===false){return}handleMouseUp(event);document.removeEventListener('mousemove',onMouseMove,false);document.removeEventListener('mouseup',onMouseUp,false);document.removeEventListener('mouseout',onMouseUp,false);scope.dispatchEvent(endEvent);state=STATE.NONE}function onMouseWheel(event){if(scope.enabled===false||scope.enableZoom===false||(state!==STATE.NONE&&state!==STATE.ROTATE)){return}event.preventDefault();event.stopPropagation();handleMouseWheel(event);scope.dispatchEvent(startEvent);scope.dispatchEvent(endEvent)}function onKeyDown(event){if(scope.enabled===false||scope.enableKeys===false||scope.enablePan===false){return}handleKeyDown(event)}function onTouchStart(event){if(scope.enabled===false){return}switch(event.touches.length){case 1:if(scope.enableRotate===false){return}handleTouchStartRotate(event);state=STATE.TOUCH_ROTATE;break;case 2:if(scope.enableZoom===false){return}handleTouchStartDolly(event);state=STATE.TOUCH_DOLLY;break;case 3:if(scope.enablePan===false){return}handleTouchStartPan(event);state=STATE.TOUCH_PAN;break;default:state=STATE.NONE}if(state!==STATE.NONE){scope.dispatchEvent(startEvent)}}function onTouchMove(event){if(scope.enabled===false){return}event.preventDefault();event.stopPropagation();switch(event.touches.length){case 1:if(scope.enableRotate===false){return}if(state!==STATE.TOUCH_ROTATE){return;}handleTouchMoveRotate(event);break;case 2:if(scope.enableZoom===false){return}if(state!==STATE.TOUCH_DOLLY){return;}handleTouchMoveDolly(event);break;case 3:if(scope.enablePan===false){return}if(state!==STATE.TOUCH_PAN){return;}handleTouchMovePan(event);break;default:state=STATE.NONE}}function onTouchEnd(event){if(scope.enabled===false){return}handleTouchEnd(event);scope.dispatchEvent(endEvent);state=STATE.NONE}function onContextMenu(event){event.preventDefault()}scope.domElement.addEventListener('contextmenu',onContextMenu,false);scope.domElement.addEventListener('mousedown',onMouseDown,false);scope.domElement.addEventListener('mousewheel',onMouseWheel,false);scope.domElement.addEventListener('MozMousePixelScroll',onMouseWheel,false);scope.domElement.addEventListener('touchstart',onTouchStart,false);scope.domElement.addEventListener('touchend',onTouchEnd,false);scope.domElement.addEventListener('touchmove',onTouchMove,false);window.addEventListener('keydown',onKeyDown,false);this.update()};THREE.OrbitControls.prototype=Object.create(THREE.EventDispatcher.prototype);THREE.OrbitControls.prototype.constructor=THREE.OrbitControls;Object.defineProperties(THREE.OrbitControls.prototype,{center:{get:function(){console.warn('THREE.OrbitControls: .center has been renamed to .target');return this.target}},noZoom:{get:function(){console.warn('THREE.OrbitControls: .noZoom has been deprecated. Use .enableZoom instead.');return!this.enableZoom},set:function(value){console.warn('THREE.OrbitControls: .noZoom has been deprecated. Use .enableZoom instead.');this.enableZoom=!value}},noRotate:{get:function(){console.warn('THREE.OrbitControls: .noRotate has been deprecated. Use .enableRotate instead.');return!this.enableRotate},set:function(value){console.warn('THREE.OrbitControls: .noRotate has been deprecated. Use .enableRotate instead.');this.enableRotate=!value}},noPan:{get:function(){console.warn('THREE.OrbitControls: .noPan has been deprecated. Use .enablePan instead.');return!this.enablePan},set:function(value){console.warn('THREE.OrbitControls: .noPan has been deprecated. Use .enablePan instead.');this.enablePan=!value}},noKeys:{get:function(){console.warn('THREE.OrbitControls: .noKeys has been deprecated. Use .enableKeys instead.');return!this.enableKeys},set:function(value){console.warn('THREE.OrbitControls: .noKeys has been deprecated. Use .enableKeys instead.');this.enableKeys=!value}},staticMoving:{get:function(){console.warn('THREE.OrbitControls: .staticMoving has been deprecated. Use .enableDamping instead.');return!this.constraint.enableDamping},set:function(value){console.warn('THREE.OrbitControls: .staticMoving has been deprecated. Use .enableDamping instead.');this.constraint.enableDamping=!value}},dynamicDampingFactor:{get:function(){console.warn('THREE.OrbitControls: .dynamicDampingFactor has been renamed. Use .dampingFactor instead.');return this.constraint.dampingFactor},set:function(value){console.warn('THREE.OrbitControls: .dynamicDampingFactor has been renamed. Use .dampingFactor instead.');this.constraint.dampingFactor=value}}});
+</script>
+<script>
+(function(canvasbox, _window){
+        /* 基础 */
+	var scene, camera, renderer, states, controls;
+	var initCamera; // 初始化照相机
+	// 太阳、水、金、地、火、木、土、土星环、天、天王星环、海王星
+	var taiyang, shui, jin, di, huo, mu, tu, tu_huan, tian, tian_huan, hai;
+	(function(){
+		// 场景
+		scene = new THREE.Scene();
+		// 照相机
+		initCamera = function(){
+			camera = new THREE.PerspectiveCamera(60, canvasbox.clientWidth / canvasbox.clientHeight, 1, 1000);
+		}
+		initCamera();
+		camera.position.set(250, 250, 250);
+		camera.lookAt({
+			x: 0,
+			y: 0,
+			z: 0
+		});
+		// 渲染器
+		renderer = new THREE.WebGLRenderer();
+		renderer.setSize(canvasbox.clientWidth, canvasbox.clientHeight);
+		renderer.clear(0xffffff);
+		canvasbox.appendChild(renderer.domElement);
+		// 监视器
+		states = new Stats();
+		document.body.appendChild(states.domElement);
+		states.domElement.style.position = "absolute";
+		states.domElement.style.left = 0;
+		states.domElement.style.top = 0;
+		//
+		controls = new THREE.OrbitControls(camera);
+	})();
+	/* 光照 */
+	(function(){
+		var huanjing = new THREE.AmbientLight(0x8f8f8f);
+		scene.add(huanjing);
+	})();
+	/* 宇宙背景 */
+	(function(PIC2){
+		var yuzhou_geometr = new THREE.PlaneGeometry(500, 500, 1, 1);
+		var yuzhou_material = new THREE.MeshBasicMaterial({
+			map: THREE.ImageUtils.loadTexture("http://www.w3cfuns.com/attachment/extend/notes/pics/201605/12/212412k1141w4h1nt1fftd.jpg"),
+			side: THREE.DoubleSide
+		});
+		var yuzhou = [];
+		for(var i = 0; i < 6; i++){
+			yuzhou.push(new THREE.Mesh(yuzhou_geometr, yuzhou_material));
+			scene.add(yuzhou[i]);
+		}
+		// 正面
+		yuzhou[0].position.set(0, 0, 250);
+		// 反面
+		yuzhou[1].position.set(0, 0, -250);
+		// 左面
+		yuzhou[2].position.set(-250, 0, 0);
+		yuzhou[2].rotation.set(0, PIC2, 0);
+		// 右面
+		yuzhou[3].position.set(250, 0, 0);
+		yuzhou[3].rotation.set(0, PIC2, 0);
+		// 上面
+		yuzhou[4].position.set(0, 250, 0);
+		yuzhou[4].rotation.set(PIC2, 0, 0);
+		// 下面
+		yuzhou[5].position.set(0, -250, 0);
+		yuzhou[5].rotation.set(PIC2, 0, 0);
+	})(Math.PI / 2);
+	/* 星球 */
+	(function(){
+		// 太阳
+		(function(){
+			var taiyang_geometry = new THREE.SphereGeometry(32, 100, 100);
+			var taiyang_material = new THREE.MeshLambertMaterial({
+				emissive: 0xe65f05,
+				map: THREE.ImageUtils.loadTexture("http://www.w3cfuns.com/attachment/extend/notes/pics/201605/12/212414y669k6hq6yq9yoyd.jpg"),
+				side: THREE.DoubleSide,
+				color: 0xffffff
+			});
+			taiyang = new THREE.Mesh(taiyang_geometry, taiyang_material);
+			scene.add(taiyang);
+			taiyang.position.set(0, 0, 0);
+			var taiyang_light = new THREE.PointLight(0xffffff, 1, 350);
+			taiyang_light.position.set(0, 0, 0);
+			scene.add(taiyang_light);
+		})();
+		// 水星
+		(function(){
+			var shui_geometry = new THREE.SphereGeometry(1, 100, 100);
+			var shui_material = new THREE.MeshLambertMaterial({
+				map: THREE.ImageUtils.loadTexture("http://www.w3cfuns.com/attachment/extend/notes/pics/201605/12/212414pff85jucjf2fc5aj.jpg"),
+				side: THREE.DoubleSide,
+			});
+			shui = new THREE.Mesh(shui_geometry, shui_material);
+			scene.add(shui);
+			shui.position.set(0, 0, 35);
+		})();
+		// 金星
+		(function(){
+			var jin_geometry = new THREE.SphereGeometry(2, 100, 100);
+			var jin_material = new THREE.MeshLambertMaterial({
+				map: THREE.ImageUtils.loadTexture("http://www.w3cfuns.com/attachment/extend/notes/pics/201605/12/212413v1pqsfp17046np69.jpg"),
+				side: THREE.DoubleSide,
+			});
+			jin = new THREE.Mesh(jin_geometry, jin_material);
+			scene.add(jin);
+			jin.position.set(0, 0, 42);
+		})();
+		// 地球
+		(function(){
+			var di_geometry = new THREE.SphereGeometry(4, 100, 100);
+			var di_material = new THREE.MeshLambertMaterial({
+				map: THREE.ImageUtils.loadTexture("http://www.w3cfuns.com/attachment/extend/notes/pics/201605/12/212412na5paf7hzrp710pg.jpg"),
+				side: THREE.DoubleSide,
+			});
+			di = new THREE.Mesh(di_geometry, di_material);
+			scene.add(di);
+			di.position.set(0, 0, 55);
+		})();
+		// 火星
+		(function(){
+			var huo_geometry = new THREE.SphereGeometry(5, 100, 100);
+			var huo_material = new THREE.MeshLambertMaterial({
+				map: THREE.ImageUtils.loadTexture("http://www.w3cfuns.com/attachment/extend/notes/pics/201605/12/212412p6qt9qgqzo1t96nd.jpg"),
+				side: THREE.DoubleSide,
+			});
+			huo = new THREE.Mesh(huo_geometry, huo_material);
+			scene.add(huo);
+			huo.position.set(0, 0, 70);
+		})();
+		// 木星
+		(function(){
+			var mu_geometry = new THREE.SphereGeometry(17, 100, 100);
+			var mu_material = new THREE.MeshLambertMaterial({
+				map: THREE.ImageUtils.loadTexture("http://www.w3cfuns.com/attachment/extend/notes/pics/201605/12/212413y6svmlc52tv288mp.jpg"),
+				side: THREE.DoubleSide,
+			});
+			mu = new THREE.Mesh(mu_geometry, mu_material);
+			scene.add(mu);
+			mu.position.set(0, 0, 100);
+			mu.rotation.set(0, 20, 0);
+		})();
+		// 土星
+		(function(){
+			var tu_geometry = new THREE.SphereGeometry(11, 100, 100);
+			var tu_material = new THREE.MeshLambertMaterial({
+				map: THREE.ImageUtils.loadTexture("http://www.w3cfuns.com/attachment/extend/notes/pics/201605/12/212416s4xwrvkw0ar6wutu.jpg"),
+				side: THREE.DoubleSide,
+			});
+			tu = new THREE.Mesh(tu_geometry, tu_material);
+			scene.add(tu);
+			tu.position.set(0, 0, 140);
+			tu.rotation.set(0.5, 0, 0);
+			// 土星环
+			var tu_huan_geometry = new THREE.CylinderGeometry(14, 22, 0, 100, 100, true);
+			var tu_huan_material = new THREE.MeshLambertMaterial({
+				map: THREE.ImageUtils.loadTexture("http://www.w3cfuns.com/attachment/extend/notes/pics/201605/12/212416ikv311fsy7vif3km.jpg"),
+				side: THREE.DoubleSide,
+			});
+			tu_huan = new THREE.Mesh(tu_huan_geometry, tu_huan_material);
+			scene.add(tu_huan);
+			tu_huan.position.set(0, 0, 140);
+			tu_huan.rotation.set(0.5, 0, 0);
+		})();
+		// 天王星
+		(function(){
+			var tian_geometry = new THREE.SphereGeometry(9, 100, 100);
+			var tian_material = new THREE.MeshLambertMaterial({
+				map: THREE.ImageUtils.loadTexture("http://www.w3cfuns.com/attachment/extend/notes/pics/201605/12/212414q44z3zeaaenqerbh.jpg"),
+				side: THREE.DoubleSide,
+			});
+			tian = new THREE.Mesh(tian_geometry, tian_material);
+			scene.add(tian);
+			tian.position.set(0, 0, 170);
+			tian.rotation.set(0, 0, 0.3);
+			// 天王星环
+			var tian_huan_geometry = new THREE.CylinderGeometry(10, 12, 0, 100, 100, true);
+			var tian_huan_material = new THREE.MeshLambertMaterial({
+				map: THREE.ImageUtils.loadTexture("http://www.w3cfuns.com/attachment/extend/notes/pics/201605/12/212415e2vkzfvkyjijb386.jpg"),
+				side: THREE.DoubleSide,
+			});
+			tian_huan = new THREE.Mesh(tian_huan_geometry, tian_huan_material);
+			scene.add(tian_huan);
+			tian_huan.position.set(0, 0, 170);
+			tian_huan.rotation.set(0, 0, 0.3);
+		})();
+		// 海王星
+		(function(){
+			var hai_geometry = new THREE.SphereGeometry(6, 100, 100);
+			var hai_material = new THREE.MeshLambertMaterial({
+				map: THREE.ImageUtils.loadTexture("http://www.w3cfuns.com/attachment/extend/notes/pics/201605/12/212412utl29a6tzaucac6l.jpg"),
+				side: THREE.DoubleSide,
+			});
+			hai = new THREE.Mesh(hai_geometry, hai_material);
+			scene.add(hai);
+			hai.position.set(0, 0, 192);
+		})();
+	})();
+	/*坐标系
+	// 画线x
+	(function(){
+		var geometry = new THREE.Geometry();
+        var material = new THREE.LineBasicMaterial( { vertexColors: true } );
+        var color = new THREE.Color( 0xffffff );
+        // 线的材质可以由2点的颜色决定
+        var p1 = new THREE.Vector3(200, 0, 0);
+        var p2 = new THREE.Vector3(0, 0, 0);
+        geometry.vertices.push(p1);
+        geometry.vertices.push(p2);
+        geometry.colors.push(color, color);
+        var line = new THREE.Line( geometry, material, THREE.LinePieces );
+        scene.add(line);
+	})();
+	// 画线y
+	(function(){
+		var geometry = new THREE.Geometry();
+        var material = new THREE.LineBasicMaterial( { vertexColors: true } );
+        var color = new THREE.Color( 0x7cfc00 );
+        // 线的材质可以由2点的颜色决定
+        var p1 = new THREE.Vector3(0, 200, 0);
+        var p2 = new THREE.Vector3(0, 0, 0);
+        geometry.vertices.push(p1);
+        geometry.vertices.push(p2);
+        geometry.colors.push(color, color);
+        var line = new THREE.Line( geometry, material, THREE.LinePieces );
+        scene.add(line);
+	})();
+	// 画线z
+	(function(){
+		var geometry = new THREE.Geometry();
+        var material = new THREE.LineBasicMaterial( { vertexColors: true } );
+        var color = new THREE.Color( 0x00ffff );
+        // 线的材质可以由2点的颜色决定
+        var p1 = new THREE.Vector3(0, 0, 200);
+        var p2 = new THREE.Vector3(0, 0, 0);
+        geometry.vertices.push(p1);
+        geometry.vertices.push(p2);
+        geometry.colors.push(color, color);
+        var line = new THREE.Line( geometry, material, THREE.LinePieces );
+        scene.add(line);
+	})();
+	*/
+	/* 初始化 */
+	(function(){
+		var PI2 = 2 * Math.PI; // 弧度的最大值
+		var zuobiaoxi = [ // 显示坐标系的信息
+			document.getElementById("zuobiao-x"), // X
+			document.getElementById("zuobiao-y"), // Y
+			document.getElementById("zuobiao-z")  // Z
+		];
+		// 自转
+		function zizhuan(){
+			taiyang.rotation.y = taiyang.rotation.y + 0.01 >= 2 * PI2 ? 0 : taiyang.rotation.y + 0.01; // 太阳自转
+			shui.rotation.y = shui.rotation.y + 0.1 >= 2 * PI2 ? 0 : shui.rotation.y + 0.1;            // 水星自转
+			jin.rotation.y = jin.rotation.y + 0.05 >= 2 * PI2 ? 0 : jin.rotation.y + 0.05;             // 金星自转
+			di.rotation.y = di.rotation.y + 0.05 >= 2 * PI2 ? 0 : di.rotation.y + 0.05;                // 地球自转
+			huo.rotation.y = huo.rotation.y + 0.03 >= 2 * PI2 ? 0 : huo.rotation.y + 0.03;             // 火星自转
+			mu.rotation.y = mu.rotation.y + 0.003 >= 2 * PI2 ? 0 : mu.rotation.y + 0.003;              // 木星自转
+			tu.rotation.y = tu.rotation.y + 0.01 >= 2 * PI2 ? 0 : tu.rotation.y + 0.01;                // 土星自转
+			tian.rotation.y = tian.rotation.y + 0.005 >= 2 * PI2 ? 0 : tian.rotation.y + 0.005;        // 天王自转
+			hai.rotation.y = hai.rotation.y + 0.003 >= 2 * PI2 ? 0 : hai.rotation.y + 0.003;           // 海王星自转
+		}
+		// 定义角度
+		var shui_deg, jin_deg, di_deg, huo_deg, mu_deg, tu_deg, tian_deg, hai_deg;
+		shui_deg = jin_deg = di_deg = huo_deg = mu_deg = tu_deg = tian_deg = hai_deg = 0;
+		// 公转
+		function gongzhuan(){
+			// 水星
+			shui_deg = shui_deg + 0.1 >= PI2 ? 0 : shui_deg + 0.1;
+			shui.position.set(35 * Math.sin(shui_deg), 0, 35 * Math.cos(shui_deg));
+			// 金星
+			jin_deg = jin_deg + 0.07 >= PI2 ? 0 : jin_deg + 0.07;
+			jin.position.set(42 * Math.sin(jin_deg), 0, 42 * Math.cos(jin_deg));
+			// 地球
+			di_deg = di_deg + 0.03 >= PI2 ? 0 : di_deg + 0.03;
+			di.position.set(55 * Math.sin(di_deg), 0, 55 * Math.cos(di_deg));
+			// 火星
+			huo_deg = huo_deg + 0.01 >= PI2 ? 0 : huo_deg + 0.01;
+			huo.position.set(70 * Math.sin(huo_deg), 0, 70 * Math.cos(huo_deg));
+			// 木星
+			mu_deg = mu_deg + 0.002 >= PI2 ? 0 : mu_deg + 0.002;
+			mu.position.set(100 * Math.sin(mu_deg), 0, 100 * Math.cos(mu_deg));
+			// 土星
+			tu_deg = tu_deg + 0.0009 >= PI2 ? 0 : tu_deg + 0.0009;
+			tu.position.set(140 * Math.sin(tu_deg), 0, 140 * Math.cos(tu_deg));
+			tu_huan.position.set(140 * Math.sin(tu_deg), 0, 140 * Math.cos(tu_deg));
+			// 天王星
+			tian_deg = tian_deg + 0.0005 >= PI2 ? 0 : tian_deg + 0.0005;
+			tian.position.set(170 * Math.sin(tian_deg), 0, 170 * Math.cos(tian_deg));
+			tian_huan.position.set(170 * Math.sin(tian_deg), 0, 170 * Math.cos(tian_deg));
+			// 海王星
+			hai_deg = hai_deg + 0.0003 >= PI2 ? 0 : hai_deg + 0.0003;
+			hai.position.set(192 * Math.sin(hai_deg), 0, 192 * Math.cos(hai_deg));
+		}
+		// 显示信息
+		function displayXYZ(){
+			zuobiaoxi[0].innerHTML = parseInt(camera.position.x);  // 摄像机X
+			zuobiaoxi[1].innerHTML = parseInt(camera.position.y);  // 摄像机Y
+			zuobiaoxi[2].innerHTML = parseInt(camera.position.z);  // 摄像机Z
+		}
+		// 窗口改变事件
+		function windowChange(){
+			var x = camera.position.x,
+				y = camera.position.y,
+				z = camera.position.z;
+			initCamera();
+			controls = new THREE.OrbitControls(camera);
+			camera.position.set(x, y, z);
+			camera.lookAt({
+				x: 0,
+				y: 0,
+				z: 0
+			});
+			renderer.setSize(canvasbox.clientWidth, canvasbox.clientHeight);
+			displayXYZ();
+		}
+		// 动画
+		function animate(){
+			states.begin();
+			zizhuan();
+			gongzhuan();
+			renderer.clear();
+			renderer.render(scene, camera);
+			states.end();
+			requestAnimationFrame(animate);
+		}
+		// 初始化
+		function init(){
+			displayXYZ();
+			_window.addEventListener("resize", windowChange, false);
+			controls.addEventListener("change", displayXYZ, false);
+			requestAnimationFrame(animate);
+		}
+		init();
+	})();
+})(document.getElementById("canvasbox"), window);
+</script>
+</body>
+</html>

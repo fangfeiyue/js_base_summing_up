@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        p{
+            background-color: orange;
+            height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <p id="p1" data-name="p1-data-name" style="background-color:red;width:100px;height:200px;">this is p1</p>
+
+        <!-- 新增节点 -->
+        <div id="div1"></div>
+        <div id="div2"></div>
+
+        <!-- 获取父元素和子元素 -->
+        <div id="div3">
+            <button>按钮1</button>
+            <button>按钮2</button>
+            <button>按钮3</button>
+            <button>按钮4</button>
+            <button>按钮5</button>
+        </div>
+    </div>
+    <script>
+        {
+            var p1 = document.getElementById('p1');
+
+            // property
+            console.log(p1.id);
+            console.log(p1.dataName);
+            console.log(p1.style);
+
+            // attribute
+            console.log(p1.getAttribute('data-name'));
+            console.log(p1.getAttribute('style'));
+        }
+        {
+            // 新增节点
+            var div1 = document.getElementById('div1');
+            var p = document.createElement('p');
+            p.innerHTML = 'hello world';
+            div1.appendChild(p);
+            // 移动已有节点
+            var div2 = document.getElementById('div2');
+            div2.appendChild(p);
+            // 获取节点
+            // 获取子元素
+            // 删除节点
+        }
+        {
+            // 获取父元素和子元素
+            var div = document.getElementById('div3');
+            var child = div.childNodes;
+            child = div.removeChild(child[1]);
+            console.log(child);
+        }
+    </script>
+</body>
+
+</html>
