@@ -592,6 +592,7 @@ history.forward();
 - 拆解url各部分  
 
 ## Git
+### git常用命令
 - git add .                 添加所有修改的文件
 - git branch                创建分支 
 - git checkout xxx          切换分支
@@ -601,3 +602,12 @@ history.forward();
 - git commit -m '备注'       将代码提交到本地库 
 - git push origin master    将代码推送到远程仓库
 - git pull origin master    拉去远程仓库的代码
+
+### 命令行中创建Git仓库
+- git init
+- git add .
+- git commit -m 'xxx'
+- git remote add origin url
+- git push -u origin master
+
+
