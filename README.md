@@ -626,7 +626,7 @@ history.forward();
 ## 个人简介
 作者：房飞跃
 
-博客地址：[前端网地址](http://www.qdfuns.com/house/31986/note) [博客园地址](https://www.cnblogs.com/fangfeiyue) [GitHub地址](https://github.com/fangfeiyue)
+博客地址：[前端网](http://www.qdfuns.com/house/31986/note)  [博客园](https://www.cnblogs.com/fangfeiyue)  [GitHub](https://github.com/fangfeiyue)
 
 职业：web前端开发工程师
 
