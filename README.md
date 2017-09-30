@@ -632,6 +632,8 @@ history.forward();
 
 座右铭：一个终身学习者
 ## 联系方式
+坐标：北京
+
 QQ：294925572
 
-坐标：北京
+微信：![XinShiJieDeHuHuan]()
