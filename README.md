@@ -648,6 +648,23 @@ history.forward();
     </body>
     </html>
     ```
+    - util.js
+    ```
+    define(function() {
+    'use strict';
+    var util = {
+        getFormatDate: function(date, type){
+            if (type == 1){
+                return '2017-10-01';
+            }else{
+                return '2017-09-30';
+            }
+        }
+    };
+
+    return util;
+});
+    ```
 - CMD   
 
 ## 个人简介
