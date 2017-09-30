@@ -665,6 +665,18 @@ history.forward();
         return util;
     });
     ```
+    - a-util.js
+    ```
+    define(['./util.js'], function(util) {
+        'use strict';
+        var aUtil = {
+            aGetFormateDate: function(date){
+                return util.getFormatDate(date, 2);
+            }
+        };
+        return aUtil;
+    });
+    ```
 - CMD   
 
 ## 个人简介
