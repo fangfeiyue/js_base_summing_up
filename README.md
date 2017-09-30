@@ -654,16 +654,16 @@ history.forward();
     'use strict';
     var util = {
         getFormatDate: function(date, type){
-            if (type == 1){
-                return '2017-10-01';
-            }else{
-                return '2017-09-30';
+                if (type == 1){
+                    return '2017-10-01';
+                }else{
+                    return '2017-09-30';
+                }
             }
-        }
-    };
+        };
 
-    return util;
-});
+        return util;
+    });
     ```
 - CMD   
 
