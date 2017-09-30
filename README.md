@@ -631,6 +631,8 @@ history.forward();
 爱好：探索新事物，学习新知识
 
 座右铭：一个终身学习者
+
+博客地址：[](http://www.qdfuns.com/house/31986/note)
 ## 联系方式
 坐标：北京
 
