@@ -1,7 +1,7 @@
 # 简单回顾、总结JavaScript基础知识
 ## 背景
 做项目一直用的react相关的技术，忽视了对原生js的复习巩固，朋友问了一个很简单的问题：===和==分别在什么情况下使用，自己居然懵逼了。。。在我的观念里，基础就是万丈高楼的根基，没有很好的根基怎么可能盖起百年不倒的雄伟建筑呢。趁现在项目不是很忙，抓紧简略复习下原生js的知识。复习也不能是漫无目的的瞎看，本文采用了问题->知识点->解答的方式。这样效率要高一点，也不会很快产生厌烦的心理。注意：一些特别简单的就没有浪费时间写 
-## 下载项目
+## 下载源码
 ```
 git clone https://github.com/fangfeiyue/js_base_summing_up.git
 ```
@@ -622,3 +622,12 @@ history.forward();
 - git config --global alias.co checkout
 - git config --global alias.ci commit
 - git config --global alias.br branch
+
+## 个人简介
+作者：房飞跃
+职业：web前端开发工程师
+爱好：学习新知识
+座右铭：一个终身学习者
+## 联系方式
+QQ：294925572
+坐标：北京
