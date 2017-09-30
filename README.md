@@ -677,6 +677,25 @@ history.forward();
         return aUtil;
     });
     ```
+    - a.js
+    ```
+    define(['./a-util.js'], function(aUtil) {
+        'use strict';
+        var a = {
+            printDate: function(date){
+                console.log(aUtil.aGetFormateDate(date));
+            }
+        };
+        return a;
+    });
+    ```
+    - main.js
+    ```
+    require(['./a'], function(a){
+        var date = new Date();
+        a.printDate(date);
+    });
+    ```
 - CMD   
 
 ## 个人简介
