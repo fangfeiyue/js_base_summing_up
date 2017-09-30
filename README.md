@@ -590,3 +590,9 @@ history.forward();
 ### 题目 
 - 如何检测浏览器的类型
 - 拆解url各部分  
+
+## Git
+- git add . 添加所有修改的文件
+- git add xxx 添加某个文件
+- git checkout xxx还原某个文件的修改
+ 
