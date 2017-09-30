@@ -592,7 +592,12 @@ history.forward();
 - 拆解url各部分  
 
 ## Git
-- git add . 添加所有修改的文件
-- git add xxx 添加某个文件
-- git checkout xxx还原某个文件的修改
- 
+- git add .                 添加所有修改的文件
+- git branch                创建分支 
+- git checkout xxx          切换分支
+- git checkout -b xxx       新建一个分支
+- git merge xxx             合并分支                
+- git add xxx               添加某个文件
+- git commit -m '备注'       将代码提交到本地库 
+- git push origin master    将代码推送到远程仓库
+- git pull origin master    拉去远程仓库的代码
