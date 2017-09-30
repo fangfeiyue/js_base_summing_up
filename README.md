@@ -7,6 +7,7 @@ git clone https://github.com/fangfeiyue/js_base_summing_up.git
 ```
 ## 运行项目
 每个文件都是单独的html文件，下载下来后，直接双击文件在浏览器运行即可
+# 正题
 ## 变量类型和计算
 1.JS中使用typeof能得到哪些类型
 - undefined
