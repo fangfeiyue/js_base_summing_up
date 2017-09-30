@@ -665,7 +665,7 @@ history.forward();
         return util;
     });
     ```
-    - 第三步 创建a-util.js用的
+    - 第三步 创建a-util.js
     ```
     define(['./util.js'], function(util) {
         'use strict';
@@ -677,7 +677,7 @@ history.forward();
         return aUtil;
     });
     ```
-    - a.js
+    - 第四步 创建a.js
     ```
     define(['./a-util.js'], function(aUtil) {
         'use strict';
@@ -689,12 +689,17 @@ history.forward();
         return a;
     });
     ```
-    - main.js
+    - 第五步 创建main.js
     ```
     require(['./a'], function(a){
         var date = new Date();
         a.printDate(date);
     });
+    ```
+    - 第六步 在引入require.js的script标签中引入main.js：data-main="./main.js"
+    ```
+    <script
+        data-main="./main.js" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     ```
 - CMD   
 
