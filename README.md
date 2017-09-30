@@ -630,7 +630,7 @@ history.forward();
     - 函数中的代码必须是全局变量，才能暴露给使用方，全局变量污染
     - 文件引用必须严格遵照顺序,文件过多，很有可能弄错
     - 依赖关系模糊
-- AMD   异步模块定义
+- AMD（异步模块定义）require.js的使用
     - index.html
     ```
     <!DOCTYPE html>
