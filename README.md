@@ -601,3 +601,18 @@ history.forward();
 - git commit -m '备注'       将代码提交到本地库 
 - git push origin master    将代码推送到远程仓库
 - git pull origin master    拉去远程仓库的代码
+
+### 命令行中创建Git仓库
+- git init
+- git add .
+- git commit -m 'xxx'
+- git remote add origin url
+- git push -u origin master
+
+### git起别名
+- git config --global alias.st status
+- git config --global alias.co checkout
+- git config --global alias.ci commit
+- git config --global alias.br branch
+
+asdfalkdfajldskfjal;dsf
