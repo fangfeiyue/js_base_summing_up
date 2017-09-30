@@ -594,6 +594,7 @@ history.forward();
 ## Git
 ### git常用命令
 - git add .                 添加所有修改的文件
+- git clone url             从远程下载git仓库
 - git branch                创建分支 
 - git checkout xxx          切换分支
 - git checkout -b xxx       新建一个分支
