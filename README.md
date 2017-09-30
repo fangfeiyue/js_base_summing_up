@@ -630,7 +630,25 @@ history.forward();
     - 函数中的代码必须是全局变量，才能暴露给使用方，全局变量污染
     - 文件引用必须严格遵照顺序,文件过多，很有可能弄错
     - 依赖关系模糊
+- AMD   异步模块定义
+    - index.html
+    ```
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+    </head>
+    <body>
 
+        <script
+        data-main="./main.js" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    </body>
+    </html>
+    ```
+- CMD   
 
 ## 个人简介
 作者：房飞跃
