@@ -631,7 +631,7 @@ history.forward();
     - 文件引用必须严格遵照顺序,文件过多，很有可能弄错
     - 依赖关系模糊
 - AMD（异步模块定义）require.js的使用
-    - index.html
+    - 第一步创建index.html引入require.js
     ```
     <!DOCTYPE html>
     <html lang="en">
@@ -648,7 +648,7 @@ history.forward();
     </body>
     </html>
     ```
-    - util.js
+    - 第二步 创建底层js    util.js
     ```
     define(function() {
     'use strict';
@@ -665,7 +665,7 @@ history.forward();
         return util;
     });
     ```
-    - a-util.js
+    - 第三步 创建a-util.js用的
     ```
     define(['./util.js'], function(util) {
         'use strict';
