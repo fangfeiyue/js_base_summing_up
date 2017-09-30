@@ -624,6 +624,14 @@ history.forward();
 - git config --global alias.ci commit
 - git config --global alias.br branch
 
+## 模块化
+### 知识点
+- 不适用模块化
+    - 函数中的代码必须是全局变量，才能暴露给使用方，全局变量污染
+    - 文件引用必须严格遵照顺序
+    - 依赖关系模糊
+
+
 ## 个人简介
 作者：房飞跃
 
