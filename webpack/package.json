@@ -1,5 +1,5 @@
 {
-  "name": "webpack",
+  "name": "webpackTest",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,6 +9,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "http-server": "^0.10.0"
+    "http-server": "^0.10.0",
+    "webpack": "^3.6.0"
+  },
+  "dependencies": {
+    "jquery": "^3.2.1"
   }
 }
