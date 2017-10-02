@@ -757,6 +757,16 @@ history.forward();
 - 回滚流程要点
     - 将当前服务器代码打包并记录版本号，备份
     - 将备份的上一个版本号解压，覆盖到线上服务器，并生成新的版本号
+### linux的基本命令
+- 创建新文件夹： mkdir xxx
+- 删除文件夹：rm -rf xxx
+- 拷贝文件：cp xxx xxx
+- 移动文件：mv xxx xxx
+- 删除文件：rm xxx
+- 查看文件内容：cat xxx
+- 查看文件开头的几行：head -n x xxx
+- 查看文件结尾的几行：tail -n x xxx
+- 搜索带xxx的内容：grep x xxx
 
 ## 个人简介
 作者：房飞跃
