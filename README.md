@@ -783,6 +783,9 @@ history.forward();
         - 根据css生成CSSOM
         - 将DOM和CSSO整合成Render Tree
         - 遇到script时，会执行并阻塞渲染
+- window.onload和DOMContentLoaded的区别
+    - window.onload：页面的资源全部加载完才执行，包括图片、视频等
+    - DOMContentLoaded：Dom渲染完即可执行，此时图片、视频还没有加载完
 - 性能优化
 - 安全性
 ### 题目
