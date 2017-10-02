@@ -523,10 +523,64 @@ xhr.send(null);
     - 容量
     - 是否会携带到ajax中
     - API易用性
-##Dom-document object model
+## Dom   Document Object Model
 ### 知识点
+- DOM事件级别
+    - DOM0
+    ```
+    element.onclick = function(){}
+    ```
+    - DOM2
+    ```
+    element.addEventListener('click', function(){});
+    ```
+    - DOM3增加了一些事件，比如鼠标事件、键盘事件
+    ```
+    element.addEventListener('keyup', function(){});
+    ```
+- DOM事件模型
+    - 捕获
+    - 冒泡
+- DOM事件流
+事件通过捕获到达目标元素(目标阶段)，从目标元素再上传(冒泡)到window对象。
+- 描述DOM事件捕获的具体流程
+window-->document-->html（document.documentElement）-->body...-->目标元素
+- Event对象的常见应用
+    - event.preventDefault()    阻止默认事件
+    - event.stopPropagation()   阻止冒泡
+    - event.stopImmediatePropagation()  于阻止剩余的事件处理函数的执行，并防止当前事件在DOM树上冒泡
+    - event.currentTarget   绑定事件的元素
+    - event.target  响应事件的元素
+- 自定义事件
+    - Event
+    ```
+    var btn = document.getElementById('btn');
+    var event = new Event('custome');
+
+    btn.addEventListener('custome', function(){
+        console.log('custome event');
+    });
+
+    btn.dispatchEvent(event);
+    ```
+    -  CustomEvent除了可以指定事件名，还可以带一些数据。注意：第二个参数不是必须的，如果写第二个参数，第二个参数必须为Object类型。
+    ```
+    var myEvent = new CustomEvent('userInfo', {
+        detail:{
+            username: 'fff'
+        }
+    });
+
+    testBtn.addEventListener('userInfo', function(e){
+        console.log(e);
+        console.log(e.detail);
+    });
+
+    testBtn.dispatchEvent(myEvent);
+    ```
+---
 - DOM本质
-DOM可以理解为浏览器把拿到的html代码，结构化一个浏览器能识别并且js可操作的一个模型而已
+DOM可以理解为浏览器把拿到的html代码，结构化一个浏览器能识别并且JS可操作的一个模型而已
 - DOM节点操作
     - 获取DOM节点
     - prototype
@@ -558,8 +612,6 @@ DOM可以理解为浏览器把拿到的html代码，结构化一个浏览器能�
     child = div.removeChild(child[1]);
     console.log(child);
     ``` 
-
-
 ### 题目
 - Dom是哪种的基本数据类型
 树
