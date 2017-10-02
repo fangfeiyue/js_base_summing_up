@@ -80,6 +80,7 @@ JSON是一种数据格式也是JS种的一个对象
     var obj3 = Object.create(P);
     ```
 - 原型、构造函数、实例、原型链
+![原型、构造函数、实例、原型链关系图](http://note.youdao.com/yws/public/resource/c2361265179a03449f6d52397fd50033/xmlnote/ECFB29250AE14EAC987951F0EFB983A2/17822)
 - instanceof的原理
 - new运算符
 ---
