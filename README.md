@@ -85,6 +85,28 @@ JSON是一种数据格式也是JS种的一个对象
 只有函数才有prototype，对象没有这个属性，但有_proto_属性
 - instanceof的原理
 实例对象的_proto_和构造函数的prototype是不是同一个引用
+- 描述new一个对象的过程
+    - 创建一个新对象
+    - this指向这个新对象，它继承自原型对象
+    - 执行构造函数，相应的参数被传入，对this赋值，this指定位这个新实例
+    - 如果构造函数返回了一个对象，那么对象会取代整个new出来的结果，如果构造函数没有返回对象，那么new出来的结果为步骤一创建的对象
+    ```
+    function M(){
+        this.name = 'ffy';
+    }
+
+    var new2 = function(func){
+    var o = Object.create(func.prototype);
+    var k = func.call(o);
+    if (typeof k == 'object'){
+        return k;
+    }else{
+        return o;
+    }
+    };
+
+    console.log(new2(M));//{name: 'ffy'}
+    ```
 ---
 - 构造函数
 
@@ -137,12 +159,6 @@ Children.prototype.constructor = Children;
 
 var children = new Children();
 ```
-- 描述new一个对象的过程
-    - 创建一个新对象
-    - this指向这个新对象，它继承自原型对象
-    - 执行构造函数，相应的参数被传入，对this赋值，this指定位这个新实例
-    - 如果构造函数返回了一个对象，那么对象会取代整个new出来的结果，如果构造函数没有返回对象，那么new出来的结果为步骤一创建的对象
-
 ## 变量提升
 ```
 fn1();

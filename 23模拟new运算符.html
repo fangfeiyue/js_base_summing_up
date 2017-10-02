@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /* 
+            1.创建一个空对象
+         */
+         function M(){
+             this.name = 'ffy';
+         }
+
+         var new2 = function(func){
+            var o = Object.create(func.prototype);
+            var k = func.call(o);
+            if (typeof k == 'object'){
+                return k;
+            }else{
+                return o;
+            }
+         };
+
+         console.log(new2(M));//{name: 'ffy'}
+
+    </script>
+</body>
+</html>
