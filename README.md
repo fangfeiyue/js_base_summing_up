@@ -81,6 +81,7 @@ JSON是一种数据格式也是JS种的一个对象
     ```
 - 原型、构造函数、实例、原型链
 ![原型、构造函数、实例、原型链关系图](http://note.youdao.com/yws/public/resource/c2361265179a03449f6d52397fd50033/xmlnote/ECFB29250AE14EAC987951F0EFB983A2/17822)
+
 只有函数才有prototype，对象没有这个属性，但有_proto_属性
 - instanceof的原理
 实例对象的_proto_和构造函数的prototype是不是同一个引用
