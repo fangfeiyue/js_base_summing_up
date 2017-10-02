@@ -767,7 +767,11 @@ history.forward();
 - 查看文件开头的几行：head -n x xxx
 - 查看文件结尾的几行：tail -n x xxx
 - 搜索带xxx的内容：grep x xxx
-
+## 运行环境
+### 知识点
+- 页面加载过程
+- 性能优化
+- 安全性
 ## 个人简介
 作者：房飞跃
 
