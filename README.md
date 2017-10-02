@@ -703,6 +703,29 @@ history.forward();
     ```
 - CMD   
 
+- AMD和CMD的使用场景
+    - 需要异步加载JS --- AMD
+    - 使用了npm的话，建议使用 --- CMD
+
+- 构建工具
+    - webpack的初步使用
+        - npm init,然后输入项目的名称等信息即可，如果只是测试用，不想输入这些可以运行npm init -y
+        - 安装webpack，npm install webpack --save-dev,如果在安装的过程中报
+        ```
+        Refusing to install webpack as a dependency of itself
+        ```
+        这个错，是因为上一步我们运行npm init后生成的package.json文件中name的名字为webpack，换一个新名字即可。
+        - 
+    - 快速在浏览器启动静态html页面，只限于静态页面哦
+        - npm install -g http-server --save-dev
+        - http-server -p 端口号
+        - 运行成功后，终端会输出几个可用的地址
+        ```
+        Starting up http-server, serving ./
+        Available on:
+        http://127.0.0.1:8881
+        ```
+        - 任选其中一个地址将其输入到浏览器运行就能打开html页面了：
 ## 个人简介
 作者：房飞跃
 
