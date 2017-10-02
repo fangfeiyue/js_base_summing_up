@@ -725,14 +725,17 @@ history.forward();
         var webpack = require('webpack');
 
         module.exports = {
-        context: path.resolve(__dirname, './src'),
-        entry: {
-            app: './app.js'
-        },
-        output: {
-            path: path.resolve(__dirname, './dist'),
-            filename: 'bundle.js'
-        }
+            context: path.resolve(__dirname, './src'),
+            entry: {
+                app: './app.js'
+            },
+            output: {
+                path: path.resolve(__dirname, './dist'),
+                filename: 'bundle.js'
+            },
+            plugins: [
+                new webpack.optimize.UglifyJsPlugin()
+            ]
         };
         ```
         - 終端運行 webpack,此時我們會看到在我們的項目中自動創建了一個dist文件夾，裡面包含有bundle.js，我們將這個文件引入index.html頁面，啟動運行inde.html，控制台會輸出webpack success
