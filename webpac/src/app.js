@@ -1,1 +1,3 @@
-console.log('webpack');
+var util = require('./util');
+
+util.print();
