@@ -81,8 +81,9 @@ JSON是一种数据格式也是JS种的一个对象
     ```
 - 原型、构造函数、实例、原型链
 ![原型、构造函数、实例、原型链关系图](http://note.youdao.com/yws/public/resource/c2361265179a03449f6d52397fd50033/xmlnote/ECFB29250AE14EAC987951F0EFB983A2/17822)
+只有函数才有prototype，对象没有这个属性，但有_proto_属性
 - instanceof的原理
-- new运算符
+实例对象的_proto_和构造函数的prototype是不是同一个引用
 ---
 - 构造函数
 
@@ -137,9 +138,9 @@ var children = new Children();
 ```
 - 描述new一个对象的过程
     - 创建一个新对象
-    - this指向这个新对象
-    - 执行构造函数，对this赋值
-    - 返回this
+    - this指向这个新对象，它继承自原型对象
+    - 执行构造函数，相应的参数被传入，对this赋值，this指定位这个新实例
+    - 如果构造函数返回了一个对象，那么对象会取代整个new出来的结果，如果构造函数没有返回对象，那么new出来的结果为步骤一创建的对象
 
 ## 变量提升
 ```
