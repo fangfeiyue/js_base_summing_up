@@ -715,7 +715,27 @@ history.forward();
         Refusing to install webpack as a dependency of itself
         ```
         这个错，是因为上一步我们运行npm init后生成的package.json文件中name的名字为webpack，换一个新名字即可。
-        - 
+        - 新建src文件夾，并在裡面新建app.js文件,輸入測試代碼：
+        ```
+        console.log('webpack success');
+        ```
+        - 創建webpack配置文件:webpack.config.js
+        ```
+        var path = require('path');
+        var webpack = require('webpack');
+
+        module.exports = {
+        context: path.resolve(__dirname, './src'),
+        entry: {
+            app: './app.js'
+        },
+        output: {
+            path: path.resolve(__dirname, './dist'),
+            filename: 'bundle.js'
+        }
+        };
+        ```
+        - 終端運行 webpack,此時我們會看到在我們的項目中自動創建了一個dist文件夾，裡面包含有bundle.js，我們將這個文件引入index.html頁面，啟動運行inde.html，控制台會輸出webpack success
     - 快速在浏览器启动静态html页面，只限于静态页面哦
         - npm install -g http-server --save-dev
         - http-server -p 端口号
