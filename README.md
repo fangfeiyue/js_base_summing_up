@@ -803,12 +803,51 @@ history.forward();
     - 页面渲染
         - CSS放前面，js放后面
         - 懒加载(图片懒加载，下拉加载更多)
+        ```
+        <img id="img" src="pre.jpg", data-real="real.jpg">
+        <script>
+            var img = document.getElementById('img);
+            img.src = img.getAttribute('data-real);
+        </scrpit>
+        ```
         - 减少DOM查询，对DOM查询做缓存
+        ```
+        var dom = document.getElementById('dom');
+        ```
         - 减少DOM操作，多个操作尽量合并在一起操作
+        ```
+        <script>
+            var x, li,
+            listNode = document.getElementById('listNode'),
+            frag = document.createDocumentFragment();
+
+            for (x = 0; x < 10; x++){
+                li = document.createElement('li');
+                li.innerHTML = "List item" + x;
+                frag.appendChild(li);
+            }
+            listNode.appendChild(frag);
+        </script>
+        ```
         - 事件节流
+        ```
+        <script>
+            var textArea = document.getElementById('text'),
+            timeoutId;
+            textArea.addEventListener('keyup', function(){
+                if (timeoutId){
+                    clearTimeout(timeoutId);
+                }
+                timeoutId = setTimeout(function() {
+                    //触发事件
+                }, 100);
+            });
+        </script>
+        ```
         - 尽早执行操作（如DOMContentLoaded）
-### XLS
-### CRS
+### XSS 跨站请求攻击
+### XSRF 跨站请求伪造
+
 ## 个人简介
 作者：房飞跃
 
