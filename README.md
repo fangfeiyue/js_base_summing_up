@@ -64,6 +64,25 @@ JSON是一种数据格式也是JS种的一个对象
 - 逻辑运算
 ## 原型原型链
 ### 1.知识点
+- 创建对象有几种方法
+    - 第一类
+    ```
+    var obj1 = {name: 'ff'};
+    var obj2 = new Object({name: 'ff'});
+    ```
+    - 第二种
+    ```
+    var M = function(name){this.name = name;}
+    ```
+    - 第三种
+    ```
+    var P = {name: 'obj'};
+    var obj3 = Object.create(P);
+    ```
+- 原型、构造函数、实例、原型链
+- instanceof的原理
+- new运算符
+---
 - 构造函数
 
 用new来生成实例的函数都是构造函数
