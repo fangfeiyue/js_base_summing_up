@@ -64,6 +64,50 @@ JSON是一种数据格式也是JS种的一个对象
 - 逻辑运算
 ## 原型原型链
 ### 1.知识点
+- 创建对象有几种方法
+    - 第一类
+    ```
+    var obj1 = {name: 'ff'};
+    var obj2 = new Object({name: 'ff'});
+    ```
+    - 第二种
+    ```
+    var M = function(name){this.name = name;}
+    ```
+    - 第三种
+    ```
+    var P = {name: 'obj'};
+    var obj3 = Object.create(P);
+    ```
+- 原型、构造函数、实例、原型链
+![原型、构造函数、实例、原型链关系图](http://note.youdao.com/yws/public/resource/c2361265179a03449f6d52397fd50033/xmlnote/ECFB29250AE14EAC987951F0EFB983A2/17822)
+
+只有函数才有prototype，对象没有这个属性，但有_proto_属性
+- instanceof的原理
+实例对象的_proto_和构造函数的prototype是不是同一个引用
+- 描述new一个对象的过程
+    - 创建一个新对象
+    - this指向这个新对象，它继承自原型对象
+    - 执行构造函数，相应的参数被传入，对this赋值，this指定位这个新实例
+    - 如果构造函数返回了一个对象，那么对象会取代整个new出来的结果，如果构造函数没有返回对象，那么new出来的结果为步骤一创建的对象
+    ```
+    function M(){
+        this.name = 'ffy';
+    }
+
+    var new2 = function(func){
+    var o = Object.create(func.prototype);
+    var k = func.call(o);
+    if (typeof k == 'object'){
+        return k;
+    }else{
+        return o;
+    }
+    };
+
+    console.log(new2(M));//{name: 'ffy'}
+    ```
+---
 - 构造函数
 
 用new来生成实例的函数都是构造函数
@@ -131,12 +175,6 @@ Children.prototype.constructor = Children;
 
 var children = new Children();
 ```
-- 描述new一个对象的过程
-    - 创建一个新对象
-    - this指向这个新对象
-    - 执行构造函数，对this赋值
-    - 返回this
-
 ## 变量提升
 ```
 fn1();
@@ -539,10 +577,64 @@ xhr.send(null);
     - 容量
     - 是否会携带到ajax中
     - API易用性
-##Dom-document object model
+## Dom   Document Object Model
 ### 知识点
+- DOM事件级别
+    - DOM0
+    ```
+    element.onclick = function(){}
+    ```
+    - DOM2
+    ```
+    element.addEventListener('click', function(){});
+    ```
+    - DOM3增加了一些事件，比如鼠标事件、键盘事件
+    ```
+    element.addEventListener('keyup', function(){});
+    ```
+- DOM事件模型
+    - 捕获
+    - 冒泡
+- DOM事件流
+事件通过捕获到达目标元素(目标阶段)，从目标元素再上传(冒泡)到window对象。
+- 描述DOM事件捕获的具体流程
+window-->document-->html（document.documentElement）-->body...-->目标元素
+- Event对象的常见应用
+    - event.preventDefault()    阻止默认事件
+    - event.stopPropagation()   阻止冒泡
+    - event.stopImmediatePropagation()  于阻止剩余的事件处理函数的执行，并防止当前事件在DOM树上冒泡
+    - event.currentTarget   绑定事件的元素
+    - event.target  响应事件的元素
+- 自定义事件
+    - Event
+    ```
+    var btn = document.getElementById('btn');
+    var event = new Event('custome');
+
+    btn.addEventListener('custome', function(){
+        console.log('custome event');
+    });
+
+    btn.dispatchEvent(event);
+    ```
+    -  CustomEvent除了可以指定事件名，还可以带一些数据。注意：第二个参数不是必须的，如果写第二个参数，第二个参数必须为Object类型。
+    ```
+    var myEvent = new CustomEvent('userInfo', {
+        detail:{
+            username: 'fff'
+        }
+    });
+
+    testBtn.addEventListener('userInfo', function(e){
+        console.log(e);
+        console.log(e.detail);
+    });
+
+    testBtn.dispatchEvent(myEvent);
+    ```
+---
 - DOM本质
-DOM可以理解为浏览器把拿到的html代码，结构化一个浏览器能识别并且js可操作的一个模型而已
+DOM可以理解为浏览器把拿到的html代码，结构化一个浏览器能识别并且JS可操作的一个模型而已
 - DOM节点操作
     - 获取DOM节点
     - prototype
@@ -574,8 +666,6 @@ DOM可以理解为浏览器把拿到的html代码，结构化一个浏览器能�
     child = div.removeChild(child[1]);
     console.log(child);
     ``` 
-
-
 ### 题目
 - Dom是哪种的基本数据类型
 树
@@ -681,7 +771,7 @@ history.forward();
         return util;
     });
     ```
-    - 第三步 创建a-util.js用的
+    - 第三步 创建a-util.js
     ```
     define(['./util.js'], function(util) {
         'use strict';
@@ -693,7 +783,7 @@ history.forward();
         return aUtil;
     });
     ```
-    - a.js
+    - 第四步 创建a.js
     ```
     define(['./a-util.js'], function(aUtil) {
         'use strict';
@@ -705,14 +795,175 @@ history.forward();
         return a;
     });
     ```
-    - main.js
+    - 第五步 创建main.js
     ```
     require(['./a'], function(a){
         var date = new Date();
         a.printDate(date);
     });
     ```
+    - 第六步 在引入require.js的script标签中引入main.js：data-main="./main.js"
+    ```
+    <script
+        data-main="./main.js" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    ```
 - CMD   
+
+- AMD和CMD的使用场景
+    - 需要异步加载JS --- AMD
+    - 使用了npm的话，建议使用 --- CMD
+
+- 构建工具
+    - webpack的初步使用
+        - npm init,然后输入项目的名称等信息即可，如果只是测试用，不想输入这些可以运行npm init -y
+        - 安装webpack，npm install webpack --save-dev,如果在安装的过程中报
+        ```
+        Refusing to install webpack as a dependency of itself
+        ```
+        这个错，是因为上一步我们运行npm init后生成的package.json文件中name的名字为webpack，换一个新名字即可。
+        - 新建src文件夾，并在裡面新建app.js文件,輸入測試代碼：
+        ```
+        console.log('webpack success');
+        ```
+        - 創建webpack配置文件:webpack.config.js
+        ```
+        var path = require('path');
+        var webpack = require('webpack');
+
+        module.exports = {
+            context: path.resolve(__dirname, './src'),
+            entry: {
+                app: './app.js'
+            },
+            output: {
+                path: path.resolve(__dirname, './dist'),
+                filename: 'bundle.js'
+            },
+            plugins: [
+                new webpack.optimize.UglifyJsPlugin()
+            ]
+        };
+        ```
+        - 終端運行 webpack,此時我們會看到在我們的項目中自動創建了一個dist文件夾，裡面包含有bundle.js，我們將這個文件引入index.html頁面，啟動運行inde.html，控制台會輸出webpack success
+    - 快速在浏览器启动静态html页面，只限于静态页面哦
+        - npm install -g http-server --save-dev
+        - http-server -p 端口号
+        - 运行成功后，终端会输出几个可用的地址
+        ```
+        Starting up http-server, serving ./
+        Available on:
+        http://127.0.0.1:8881
+        ```
+        - 任选其中一个地址将其输入到浏览器运行就能打开html页面了：
+### 上线回滚
+- 上线流程要点
+    - 代码提交到master分支
+    - 将当前服务器的代码全部打包并记录版本号，备份
+    - 将master分支的代码提交覆盖到线上服务器，生成新版本号
+- 回滚流程要点
+    - 将当前服务器代码打包并记录版本号，备份
+    - 将备份的上一个版本号解压，覆盖到线上服务器，并生成新的版本号
+### linux的基本命令
+- 创建新文件夹： mkdir xxx
+- 删除文件夹：rm -rf xxx
+- 拷贝文件：cp xxx xxx
+- 移动文件：mv xxx xxx
+- 删除文件：rm xxx
+- 查看文件内容：cat xxx
+- 查看文件开头的几行：head -n x xxx
+- 查看文件结尾的几行：tail -n x xxx
+- 搜索带xxx的内容：grep x xxx
+## 运行环境
+### 知识点
+- 页面加载过程
+    - 加载资源的形式
+        - 输入url（或跳转页面）加载html
+        - 加载html中的静态资源
+    - 加载一个资源的过程
+        - 浏览器根据DNS服务器得到域名的IP地址
+        - 向IP的机器发送http请求
+        - 服务器收到、处理并返回http请求
+        - 浏览器得到返回内容
+    - 浏览器渲染页面的过程
+        - 根据html生成DOM Tree
+        - 根据css生成CSSOM
+        - 将DOM和CSSO整合成Render Tree
+        - 遇到script时，会执行并阻塞渲染
+- window.onload和DOMContentLoaded的区别
+    - window.onload：页面的资源全部加载完才执行，包括图片、视频等
+    - DOMContentLoaded：Dom渲染完即可执行，此时图片、视频还没有加载完
+- 性能优化
+- 安全性
+### 题目
+- 从输入url到得到html的详细过程
+## 性能优化
+- 原则
+    - 多使用内存、缓存或者其他方法
+    - 减少CPU计算，减少网络请求
+- 从哪里入手
+    - 加载页面和静态资源
+        - 静态资源的压缩、合并
+        - 静态资源缓存
+        - 使用CDN让让资源加载更快
+        - 使用SSR后端渲染，数据直接输出到HTML中
+    - 页面渲染
+        - CSS放前面，js放后面
+        - 懒加载(图片懒加载，下拉加载更多)
+        ```
+        <img id="img" src="pre.jpg", data-real="real.jpg">
+        <script>
+            var img = document.getElementById('img);
+            img.src = img.getAttribute('data-real);
+        </scrpit>
+        ```
+        - 减少DOM查询，对DOM查询做缓存
+        ```
+        var dom = document.getElementById('dom');
+        ```
+        - 减少DOM操作，多个操作尽量合并在一起操作
+        ```
+        <script>
+            var x, li,
+            listNode = document.getElementById('listNode'),
+            frag = document.createDocumentFragment();
+
+            for (x = 0; x < 10; x++){
+                li = document.createElement('li');
+                li.innerHTML = "List item" + x;
+                frag.appendChild(li);
+            }
+            listNode.appendChild(frag);
+        </script>
+        ```
+        - 事件节流
+        ```
+        <script>
+            var textArea = document.getElementById('text'),
+            timeoutId;
+            textArea.addEventListener('keyup', function(){
+                if (timeoutId){
+                    clearTimeout(timeoutId);
+                }
+                timeoutId = setTimeout(function() {
+                    //触发事件
+                }, 100);
+            });
+        </script>
+        ```
+        - 尽早执行操作（如DOMContentLoaded）
+### XSS 跨站请求攻击
+### XSRF 跨站请求伪造
+
+### 课外小知识之控制台
+- 将变量里的值排列成表格
+比如我们有一个下面这样的对象数组：
+var myArray=[{a:1,b:2,c:3},{a:1,b:2,c:3,d:4},{k:11,f:22},{a:1,b:2,c:3}]
+当我们在控制台输入变量名时，它给我们返回的格式是对象数组。这很有用。你可以展开对象查看属性值。
+但当属性增加时，这变得难于理解。因此，要想清楚地表现变量，我们可以把它展示成表格。
+console.table(variableName) 把变量和它的所有属性展现城表格结构
+
+- 查询代码块执行时间
+JavaScript 控制台有一个名为 console.time(‘labelName’) 的重要函数，它接收一个标记名作为参数，然后开启计时器。另一个重要函数是 console.timeEnd(‘labelName’) ，它也接收一个标记名作为参数，然后结束特定标记名所关联的计时器。 
 
 ## 个人简介
 作者：房飞跃
