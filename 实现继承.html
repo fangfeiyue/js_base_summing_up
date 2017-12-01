@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        {
+            // 借助构造函数实现继承
+            // function Parent (name) {
+            //     this.name = name;
+            // }
+
+            // Parent.prototype.say = function(){
+            //     console.log('我能说会道');
+            // };
+
+            // function Child(age){
+            //     Parent.call(this);
+            //     this.age = age;
+            // }
+
+            // let child = new Child();
+            // child.say(); //报错child.say is not a function
+            // console.log(child); //{name: undefined, age: undefined}
+        }
+
+        {
+            //借助原型链实现继承
+            function Parent(){
+                this.name = 'fang';
+                this.fruits = ["苹果", "香蕉"];
+            }
+            Parent.prototype.say = function(){
+                console.log('我能说会道');
+            };
+            function Child(){
+                this.age = 18;
+            }
+            Child.prototype = new Parent();
+
+            let child = new Child();
+            let child2 = new Child();
+            child.say();
+
+            child.fruits.push("梨");
+            
+            console.log(child.fruits, child2.fruits); //["苹果", "香蕉", "梨"] (3) ["苹果", "香蕉", "梨"]
+        }
+    </script>
+</body>
+</html>

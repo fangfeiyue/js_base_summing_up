@@ -141,16 +141,65 @@ for (item in f){
     - 类的声明
         - ES5
         ```
-        
+        function Foo(name){
+            this.name = name;
+        };
         ```
         - ES6
         ```
-
+        class Foo{
+            constructor(){
+                this.name = name;
+            };
+        }
         ```
-    - 生成实例
+    - 生成实例，一律采用new关键字生成实例。
 - 类与继承
     - 如何实现继承
     - 继承的几种方式
+        - 借助构造函数实现继承
+        ```
+        function Parent (name) {
+            this.name = name;
+        }
+
+        Parent.prototype.say = function(){
+            console.log('我能说会道');
+        };
+
+        function Child(age){
+            Parent.call(this);
+            this.age = age;
+        }
+
+        let child = new Child();
+        child.say(); //报错child.say is not a function
+        console.log(child); //{name: undefined, age: undefined}
+        ```
+        借助构造函数实现继承的缺陷是子类无法继承父类原型链上的属性方法。
+        - 借助原型链实现继承
+        ```
+        function Parent(){
+                this.name = 'fang';
+                this.fruits = ["苹果", "香蕉"];
+            }
+            Parent.prototype.say = function(){
+                console.log('我能说会道');
+            };
+            function Child(){
+                this.age = 18;
+            }
+            Child.prototype = new Parent();
+
+            let child = new Child();
+            let child2 = new Child();
+            child.say();
+
+            child.fruits.push("梨");
+            
+            console.log(child.fruits, child2.fruits); //["苹果", "香蕉", "梨"] (3) ["苹果", "香蕉", "梨"]
+        ```
+        借助原型链实现继承的缺点，如果子类继承的父类中的引用类型，当一个子类修改这个引用类型，其他子类中的这个属性都会跟着变化
 - 原型链
 
 ![原型链](http://note.youdao.com/yws/public/resource/c2361265179a03449f6d52397fd50033/xmlnote/987AAE1E2D9B420394DE2778C97E1A79/17816)
