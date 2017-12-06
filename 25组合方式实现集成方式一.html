@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+    
+        // 组合方式实现集成一
+        function Parent(){
+            this.name = 'fang';
+            this.arr = [1, 2, 3, 4, 5]
+        }
+        Parent.prototype.say = function(){
+            console.log('我能说会道');
+        };
+
+        function Child(){
+            Parent.call(this);
+        }
+        //Child没有自己的原型对象，它的原型对象就是Parent的原型对象，所以它的constructor就指向Parent
+
+        Child.prototype = Object.create(Parent.prototype);
+        Child.prototype.constructor = Child;
+
+        let child = new Child(),
+            child2 = new Child();
+        child.arr.push(6);
+        console.log(child, child2);
+        child.say();
+        
+        console.log(child instanceof Child, child instanceof Parent);// true true
+
+        console.log(child.constructor,);//Child(){}
+
+        console.log(child.constructor === Parent);// false
+        console.log(child.constructor === Child);// true
+        console.log(child.constructor === Object);// false
+        
+    </script>
+
+</body>
+</html>

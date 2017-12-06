@@ -200,6 +200,89 @@ for (item in f){
             console.log(child.fruits, child2.fruits); //["苹果", "香蕉", "梨"] (3) ["苹果", "香蕉", "梨"]
         ```
         借助原型链实现继承的缺点，如果子类继承的父类中的引用类型，当一个子类修改这个引用类型，其他子类中的这个属性都会跟着变化
+    - 原型链和构造函数组合
+    ```
+    function Parent(){
+        this.name = 'fang';
+        this.arr = [1, 2, 3, 4, 5]
+    }
+    Parent.prototype.say = function(){
+        console.log('我能说会道');
+    };
+
+    function Child(){
+        Parent.call(this);
+    }
+    Child.prototype = new Parent();
+    let child = new Child(),
+        child2 = new Child();
+    child.arr.push(6);
+    console.log(child, child2);
+    child.say();
+    ```
+    上面的这种组合方式执行了两次父类方法
+    - 优化
+    ```
+    function Parent(){
+        this.name = 'fang';
+        this.arr = [1, 2, 3, 4, 5]
+    }
+    Parent.prototype.say = function(){
+        console.log('我能说会道');
+    };
+
+    function Child(){
+        Parent.call(this);
+    }
+    //Child没有自己的原型对象，它的原型对象就是Parent的原型对象，所以它的constructor就指向Parent
+    Child.prototype = Parent.prototype;
+    let child = new Child(),
+        child2 = new Child();
+    child.arr.push(6);
+    console.log(child, child2);
+    child.say();
+    
+    console.log(child instanceof Child, child instanceof Parent);// true true
+
+    console.log(child.constructor,);//Parent(){}
+
+    console.log(child.constructor === Parent);// true
+    console.log(child.constructor === Child);// false
+    console.log(child.constructor === Object);// false
+    ```
+    - 优化
+    ```
+    function Parent(){
+        this.name = 'fang';
+        this.arr = [1, 2, 3, 4, 5]
+    }
+    Parent.prototype.say = function(){
+        console.log('我能说会道');
+    };
+
+    function Child(){
+        Parent.call(this);
+    }
+    //Child没有自己的原型对象，它的原型对象就是Parent的原型对象，所以它的constructor就指向Parent
+
+    Child.prototype = Object.create(Parent.prototype);
+    Child.prototype.constructor = Child;
+
+    let child = new Child(),
+        child2 = new Child();
+    child.arr.push(6);
+    console.log(child, child2);
+    child.say();
+    
+    console.log(child instanceof Child, child instanceof Parent);// true true
+
+    console.log(child.constructor,);//Child(){}
+
+    console.log(child.constructor === Parent);// false
+    console.log(child.constructor === Child);// true
+    console.log(child.constructor === Object);// false
+    ```
+
 - 原型链
 
 ![原型链](http://note.youdao.com/yws/public/resource/c2361265179a03449f6d52397fd50033/xmlnote/987AAE1E2D9B420394DE2778C97E1A79/17816)
